@@ -40,7 +40,11 @@ jobs:
           node-version: 22
       - run: corepack enable
       - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter @zedtech/zedkit-docs build
+      - name: Build docs
+        env:
+          NEXT_PUBLIC_ZEDOS_RUNS_API_BASE: ${{ vars.NEXT_PUBLIC_ZEDOS_RUNS_API_BASE }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm --filter @zedtech/zedkit-docs build
       - name: Write suggest env
         env:
           IDENTITY_AI_ENABLED: ${{ secrets.IDENTITY_AI_ENABLED }}
