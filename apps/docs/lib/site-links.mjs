@@ -13,7 +13,7 @@ export const SITE_BUG_REPORT_URL =
   "https://github.com/zedtech-fr/zedkit-lab/issues/new?template=bug_report.md";
 export const SITE_COMPANY_URL = "https://zedtech.fr";
 
-/** Romain's Medium article about this lab. */
+/** Public Medium article about this lab. */
 export const SITE_STORY_URL =
   "https://medium.com/@romain-zt/zedkit-jai-donn%C3%A9-les-cl%C3%A9s-%C3%A0-grokbot-et-gard%C3%A9-mon-t%C3%A9l%C3%A9phone-ce86bfc96636";
 

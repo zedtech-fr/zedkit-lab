@@ -2,16 +2,19 @@
 
 import { tryCatch } from "@zedtech/zedkit-core";
 
+export const FOLLOW_PROGRESS_FIRSTNAME_STORAGE_KEY = "zk-follow-progress-firstname";
 export const FOLLOW_PROGRESS_EMAIL_STORAGE_KEY = "zk-follow-progress-email";
-export const LAB_NOTICE_MODE_STORAGE_KEY = "zk-lab-notice-mode";
-export const LAB_NOTICE_MODE_EVENT = "zk-lab-notice-mode";
-
-export type LabNoticeMode = "full" | "compact";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const FIRSTNAME_MAX_LENGTH = 60;
 
 export function isFollowProgressEmail(value: string): boolean {
   return EMAIL_PATTERN.test(value.trim());
+}
+
+export function isFollowProgressFirstname(value: string): boolean {
+  const trimmed = value.trim();
+  return trimmed.length > 0 && trimmed.length <= FIRSTNAME_MAX_LENGTH;
 }
 
 /**
@@ -33,8 +36,22 @@ export function newsletterEndpointEnvName(): string {
   return "NEXT_PUBLIC_NEWSLETTER_ENDPOINT";
 }
 
-export function followProgressPayload(email: string): { email: string } {
-  return { email: email.trim() };
+export function followProgressPayload(firstname: string, email: string): { firstname: string; email: string } {
+  return { firstname: firstname.trim(), email: email.trim() };
+}
+
+export function readStoredFirstname(storage: Pick<Storage, "getItem"> | null): string {
+  if (storage === null) return "";
+  const result = tryCatch(() => storage.getItem(FOLLOW_PROGRESS_FIRSTNAME_STORAGE_KEY));
+  if (!result.ok || result.value === null) return "";
+  return result.value;
+}
+
+export function writeStoredFirstname(storage: Pick<Storage, "setItem"> | null, firstname: string): void {
+  if (storage === null) return;
+  tryCatch(() => {
+    storage.setItem(FOLLOW_PROGRESS_FIRSTNAME_STORAGE_KEY, firstname);
+  });
 }
 
 export function readStoredEmail(storage: Pick<Storage, "getItem"> | null): string {
@@ -48,20 +65,6 @@ export function writeStoredEmail(storage: Pick<Storage, "setItem"> | null, email
   if (storage === null) return;
   tryCatch(() => {
     storage.setItem(FOLLOW_PROGRESS_EMAIL_STORAGE_KEY, email);
-  });
-}
-
-export function readLabNoticeMode(storage: Pick<Storage, "getItem"> | null): LabNoticeMode {
-  if (storage === null) return "full";
-  const result = tryCatch(() => storage.getItem(LAB_NOTICE_MODE_STORAGE_KEY));
-  if (!result.ok) return "full";
-  return result.value === "compact" ? "compact" : "full";
-}
-
-export function writeLabNoticeMode(storage: Pick<Storage, "setItem"> | null, mode: LabNoticeMode): void {
-  if (storage === null) return;
-  tryCatch(() => {
-    storage.setItem(LAB_NOTICE_MODE_STORAGE_KEY, mode);
   });
 }
 

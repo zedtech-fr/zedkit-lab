@@ -9,9 +9,9 @@ import {
 import { homeFollowCopy } from "../i18n/home-follow-copy";
 
 /**
- * After the closing prompt: a fuller follow-progress capture than the
- * site-wide banner. The banner stays visible on every route; this section
- * is the home landing's dedicated ask.
+ * After the closing prompt: the home landing's dedicated follow-progress
+ * ask, for visitors who skipped or missed the once-per-visitor welcome
+ * popup. Same form, fuller framing.
  */
 export function HomeFollowSection() {
   return (

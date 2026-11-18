@@ -3,13 +3,16 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { tryCatchAsync } from "@zedtech/zedkit-core";
 
-import { labNoticeCopy } from "@/components/site-chrome/i18n/lab-notice-copy";
+import { welcomePopupCopy } from "@/components/site-chrome/i18n/welcome-popup-copy";
 import {
   followProgressPayload,
   isFollowProgressEmail,
+  isFollowProgressFirstname,
   parseFollowProgressError,
   readStoredEmail,
+  readStoredFirstname,
   writeStoredEmail,
+  writeStoredFirstname,
 } from "@/lib/follow-progress";
 
 export type FollowProgressStatus = "idle" | "submitting" | "success" | "error";
@@ -19,22 +22,28 @@ function storage(): Storage | null {
 }
 
 export function useFollowProgressForm(endpoint: string) {
-  const copy = labNoticeCopy.follow;
+  const copy = welcomePopupCopy.form;
+  const [firstname, setFirstname] = useState("");
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<FollowProgressStatus>("idle");
+  const [fieldError, setFieldError] = useState<"firstname" | "email" | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    setFirstname(readStoredFirstname(storage()));
     setEmail(readStoredEmail(storage()));
   }, []);
+
+  function onFirstnameChange(value: string) {
+    setFirstname(value);
+    writeStoredFirstname(storage(), value);
+    if (fieldError === "firstname") setFieldError(null);
+  }
 
   function onEmailChange(value: string) {
     setEmail(value);
     writeStoredEmail(storage(), value);
-    if (status === "error") {
-      setStatus("idle");
-      setError(null);
-    }
+    if (fieldError === "email") setFieldError(null);
   }
 
   function clearError() {
@@ -44,20 +53,26 @@ export function useFollowProgressForm(endpoint: string) {
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const trimmed = email.trim();
-    writeStoredEmail(storage(), trimmed);
-    if (!isFollowProgressEmail(trimmed)) {
-      setStatus("error");
-      setError(copy.invalid);
+    const trimmedFirstname = firstname.trim();
+    const trimmedEmail = email.trim();
+    writeStoredFirstname(storage(), trimmedFirstname);
+    writeStoredEmail(storage(), trimmedEmail);
+    if (!isFollowProgressFirstname(trimmedFirstname)) {
+      setFieldError("firstname");
       return;
     }
+    if (!isFollowProgressEmail(trimmedEmail)) {
+      setFieldError("email");
+      return;
+    }
+    setFieldError(null);
     setStatus("submitting");
     setError(null);
     const result = await tryCatchAsync(async () => {
       const response = await fetch(endpoint, {
         method: "POST",
         headers: { Accept: "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify(followProgressPayload(trimmed)),
+        body: JSON.stringify(followProgressPayload(trimmedFirstname, trimmedEmail)),
       });
       const bodyText = await response.text();
       if (!response.ok) {
@@ -73,5 +88,16 @@ export function useFollowProgressForm(endpoint: string) {
     setError(null);
   }
 
-  return { email, status, error, onEmailChange, onSubmit, clearError, copy };
+  return {
+    firstname,
+    email,
+    status,
+    fieldError,
+    error,
+    onFirstnameChange,
+    onEmailChange,
+    onSubmit,
+    clearError,
+    copy,
+  };
 }

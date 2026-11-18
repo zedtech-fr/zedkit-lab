@@ -1,8 +1,8 @@
 /** English copy for the home follow-progress section. Keys only; no markup. */
 export const homeFollowCopy = {
   section: {
-    title: "Want the rest?",
+    title: "Take the lab home with you",
     description:
-      "I'll open a real zedkit repo — the one you can actually build on. Leave your email if you want to hear when it's ready.",
+      "This stays a lab — the npm packages are my workbench, not a shelf. I'm building the repo you'll be able to depend on.",
   },
 } as const;

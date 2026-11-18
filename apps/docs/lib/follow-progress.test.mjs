@@ -3,17 +3,31 @@ import test from "node:test";
 
 const {
   isFollowProgressEmail,
+  isFollowProgressFirstname,
   readNewsletterEndpoint,
   followProgressPayload,
   readStoredEmail,
   writeStoredEmail,
-  readLabNoticeMode,
-  writeLabNoticeMode,
+  readStoredFirstname,
+  writeStoredFirstname,
   parseFollowProgressError,
   newsletterEndpointEnvName,
   FOLLOW_PROGRESS_EMAIL_STORAGE_KEY,
-  LAB_NOTICE_MODE_STORAGE_KEY,
+  FOLLOW_PROGRESS_FIRSTNAME_STORAGE_KEY,
 } = await import("./follow-progress.ts");
+
+function memoryStorage() {
+  const store = new Map();
+  return {
+    store,
+    storage: {
+      getItem: (key) => store.get(key) ?? null,
+      setItem: (key, value) => {
+        store.set(key, value);
+      },
+    },
+  };
+}
 
 test("accepts ordinary emails and rejects empty or incomplete values", () => {
   assert.equal(isFollowProgressEmail("ada@example.com"), true);
@@ -21,6 +35,14 @@ test("accepts ordinary emails and rejects empty or incomplete values", () => {
   assert.equal(isFollowProgressEmail(""), false);
   assert.equal(isFollowProgressEmail("ada@"), false);
   assert.equal(isFollowProgressEmail("not-an-email"), false);
+});
+
+test("accepts a short firstname and rejects blank or oversized values", () => {
+  assert.equal(isFollowProgressFirstname("Ada"), true);
+  assert.equal(isFollowProgressFirstname("  Ada  "), true);
+  assert.equal(isFollowProgressFirstname(""), false);
+  assert.equal(isFollowProgressFirstname("   "), false);
+  assert.equal(isFollowProgressFirstname("a".repeat(61)), false);
 });
 
 test("newsletter endpoint is used only when it is an absolute http(s) URL", () => {
@@ -35,22 +57,24 @@ test("newsletter endpoint is used only when it is an absolute http(s) URL", () =
   assert.equal(newsletterEndpointEnvName(), "NEXT_PUBLIC_NEWSLETTER_ENDPOINT");
 });
 
-test("payload trims the email", () => {
-  assert.deepEqual(followProgressPayload("  ada@example.com  "), { email: "ada@example.com" });
+test("payload posts firstname and email, trimmed", () => {
+  assert.deepEqual(followProgressPayload("  Ada  ", "  ada@example.com  "), {
+    firstname: "Ada",
+    email: "ada@example.com",
+  });
 });
 
-test("email storage persists and survives a broken store", () => {
-  const store = new Map();
-  const storage = {
-    getItem: (key) => store.get(key) ?? null,
-    setItem: (key, value) => {
-      store.set(key, value);
-    },
-  };
+test("firstname and email storage persist and survive a broken store", () => {
+  const { store, storage } = memoryStorage();
+  assert.equal(readStoredFirstname(storage), "");
   assert.equal(readStoredEmail(storage), "");
+  writeStoredFirstname(storage, "Ada");
   writeStoredEmail(storage, "ada@example.com");
+  assert.equal(store.get(FOLLOW_PROGRESS_FIRSTNAME_STORAGE_KEY), "Ada");
   assert.equal(store.get(FOLLOW_PROGRESS_EMAIL_STORAGE_KEY), "ada@example.com");
+  assert.equal(readStoredFirstname(storage), "Ada");
   assert.equal(readStoredEmail(storage), "ada@example.com");
+  assert.equal(readStoredFirstname(null), "");
   assert.equal(readStoredEmail(null), "");
   const broken = {
     getItem() {
@@ -60,23 +84,10 @@ test("email storage persists and survives a broken store", () => {
       throw new Error("blocked");
     },
   };
+  assert.equal(readStoredFirstname(broken), "");
   assert.equal(readStoredEmail(broken), "");
+  writeStoredFirstname(broken, "Ada");
   writeStoredEmail(broken, "ada@example.com");
-});
-
-test("lab notice mode defaults to full and can compact", () => {
-  const store = new Map();
-  const storage = {
-    getItem: (key) => store.get(key) ?? null,
-    setItem: (key, value) => {
-      store.set(key, value);
-    },
-  };
-  assert.equal(readLabNoticeMode(null), "full");
-  assert.equal(readLabNoticeMode(storage), "full");
-  writeLabNoticeMode(storage, "compact");
-  assert.equal(store.get(LAB_NOTICE_MODE_STORAGE_KEY), "compact");
-  assert.equal(readLabNoticeMode(storage), "compact");
 });
 
 test("error parser prefers a JSON message, then the status", () => {
