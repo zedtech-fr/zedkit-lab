@@ -27,10 +27,10 @@ function memoryStorage() {
   };
 }
 
-test("popup opens after a delay of about 8 seconds", () => {
+test("popup opens after a delay of about 3 seconds", () => {
   assert.equal(typeof WELCOME_POPUP_DELAY_MS, "number");
-  assert.ok(WELCOME_POPUP_DELAY_MS >= 5000, `delay ${WELCOME_POPUP_DELAY_MS}ms opens too fast`);
-  assert.ok(WELCOME_POPUP_DELAY_MS <= 12000, `delay ${WELCOME_POPUP_DELAY_MS}ms keeps visitors waiting`);
+  assert.ok(WELCOME_POPUP_DELAY_MS >= 2500, `delay ${WELCOME_POPUP_DELAY_MS}ms opens too fast`);
+  assert.ok(WELCOME_POPUP_DELAY_MS <= 4000, `delay ${WELCOME_POPUP_DELAY_MS}ms keeps visitors waiting`);
   assert.equal(typeof WELCOME_POPUP_FOCUS_RETRY_MS, "number");
   assert.ok(WELCOME_POPUP_FOCUS_RETRY_MS > 0);
   assert.ok(WELCOME_POPUP_FOCUS_RETRY_MS < WELCOME_POPUP_DELAY_MS);

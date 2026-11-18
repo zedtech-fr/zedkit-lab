@@ -9,6 +9,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  Heading,
   Stack,
   StatusDot,
   Surface,
@@ -35,11 +36,11 @@ import {
  * Customers:        Developers reading the docs on a laptop or a phone.
  * Customer personas: Hurried scanner (skims, dismisses, reopens through a pill) and interested reader (leaves
  *                   a name on the first visit); both burned by hype and drip campaigns; both often on phones.
- * UI decisions:     Kit Dialog chrome from the Order-details specimen, because: the scanner recognises a familiar
- *                   surface already proven premium in glass/mist, light/dark. Capture panel as the inner bordered
- *                   surface with the submit in a real DialogFooter beside an outline minimize, because: the gold
- *                   footer makes the form the obvious next action. Minimized WidgetButton pill just above the
- *                   identity dock, because: the scanner dismisses without losing the ask, in the dock family.
+ * UI decisions:     Home-DA inverted stage (hero / featured six-sentences): indigo-to-violet panel, decorative
+ *                   blobs, title-scale headline, then a frosted glass capture card that restores ink, because
+ *                   the popup must feel like the home, not official Dialog chrome. Kit primary submit in the
+ *                   glass card. Minimized WidgetButton pill just above the identity dock, because: the scanner
+ *                   dismisses without losing the ask, in the dock family.
  *
  * Delayed welcome popup: lab notice + follow-progress capture. Mounted once
  * from the root layout so it can appear on any landing route (home, docs,
@@ -104,6 +105,7 @@ function WelcomePill({ onReopen }: { onReopen: () => void }) {
         aria-haspopup="dialog"
         onClick={onReopen}
         data-welcome-pill=""
+        data-surface="glass"
         className="pointer-events-auto"
       >
         <StatusDot tone="active" pulse={false} />
@@ -124,22 +126,27 @@ export function WelcomePopup() {
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="sm:max-w-reading" closeLabel={welcomePopupCopy.close} data-welcome-popup="">
-          <Stack gap="md">
+          <Stack gap="md" data-welcome-stage="">
+            <span aria-hidden="true" data-welcome-blob="1" />
+            <span aria-hidden="true" data-welcome-blob="2" />
             <DialogHeader>
-              <DialogTitle>{welcomePopupCopy.headline}</DialogTitle>
-              <DialogDescription>{welcomePopupCopy.notice}</DialogDescription>
+              <DialogTitle asChild>
+                <Heading level={2} typeRole="title">
+                  {welcomePopupCopy.headline}
+                </Heading>
+              </DialogTitle>
+              <DialogDescription asChild>
+                <Text typeRole="body">{welcomePopupCopy.notice}</Text>
+              </DialogDescription>
             </DialogHeader>
-            <Stack gap="tight">
-              <Text className="font-medium">{welcomePopupCopy.gift}</Text>
-              <OffPathLink href={SITE_STORY_URL} className="w-fit text-dense link-offset hover:underline">
-                {welcomePopupCopy.story}
-              </OffPathLink>
-            </Stack>
-            <Surface variant="popover" elevation={0} radius="lg" padding="md" data-welcome-capture="">
+            <OffPathLink href={SITE_STORY_URL} className="w-fit link-offset hover:underline">
+              {welcomePopupCopy.story}
+            </OffPathLink>
+            <Surface variant="glass" elevation={0} radius="lg" padding="md" data-welcome-capture="">
               <Stack gap="sm">
                 <Stack gap="tight">
                   <Text typeRole="label">{welcomePopupCopy.capture.title}</Text>
-                  <Text variant="muted" className="text-dense">
+                  <Text typeRole="body" variant="muted">
                     {welcomePopupCopy.capture.description}
                   </Text>
                 </Stack>

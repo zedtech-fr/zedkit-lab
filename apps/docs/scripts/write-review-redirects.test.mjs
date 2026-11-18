@@ -85,7 +85,14 @@ test("writes stub html for /reviews and every snapshot pull request URL", async 
     }
   }
   assert.equal(existsSync(join(dir, "issues/108/runs/run-108-impl.html")), false);
+  assert.equal(existsSync(join(dir, "issues/pr/54.html")), false);
   assert.equal(existsSync(join(dir, "issues/pr/54/runs/run-54-review.html")), false);
+  const linkedPr = readFileSync(join(dir, "issues/pr/133.html"), "utf8");
+  assert.match(linkedPr, /\/issues\/108/);
+  assert.match(linkedPr, /location\.replace/);
+  const linkedRun = readFileSync(join(dir, "issues/pr/133/runs/run-108-impl.html"), "utf8");
+  assert.match(linkedRun, /\/issues\/108\/runs\/run-108-impl/);
+  assert.match(linkedRun, /location\.replace/);
   const root = readFileSync(join(dir, "reviews.html"), "utf8");
   assert.match(root, /\/issues/);
   for (const n of RETIRED_REVIEW_PR_NUMBERS) {

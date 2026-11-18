@@ -2,8 +2,7 @@
 export const welcomePopupCopy = {
   headline: "Welcome to the lab. Mind the sawdust.",
   notice:
-    "The @zedtech/zedkit-* packages on npm are my workbench, not a store shelf, so don't ship them to production.",
-  gift: "The code itself is another story: copy it, paste it, steal the good bits.",
+    "Don't ship the @zedtech/zedkit-* npm packages to production. Copy, paste, or steal the useful bits — that's what the code is for.",
   story: "Read the story behind zedkit (in French)",
   close: "Close",
   minimize: "Keep browsing",
@@ -13,8 +12,7 @@ export const welcomePopupCopy = {
   },
   capture: {
     title: "Want the version you can build on?",
-    description:
-      "I'm turning this lab into a repo you can actually depend on. Leave your first name and email and I'll write the day it opens. One email. No drip campaign.",
+    description: "Leave your first name and email. I'll write the day this repo opens.",
   },
   form: {
     firstnameLabel: "First name",
@@ -28,11 +26,11 @@ export const welcomePopupCopy = {
     invalidEmail: "That address won't survive the trip. Check it?",
     error: "That didn't go through — likely my wiring, not your typing.",
     retry: "Try again",
-    consent: "One email when the repo opens. Nothing else, never shared, unsubscribe anytime.",
+    consent: "One email. Never shared.",
   },
   unwired: {
     message:
-      "The list isn't wired on this build, so nothing was sent. Your name and email stay saved in this browser. They'll be right here when the list opens.",
+      "The list isn't wired on this build, so nothing was sent. Your name and email stay saved in this browser.",
     secondaryLead: "Follow along in the meantime:",
     medium: "Follow on Medium",
     github: "Watch on GitHub",

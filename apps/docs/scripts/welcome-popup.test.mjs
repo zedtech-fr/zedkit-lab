@@ -35,6 +35,10 @@ test("root layout mounts the welcome popup once, ahead of Provider, so every rou
   assert.match(layout, /<SkipLink \/>\s*<WelcomePopup \/>\s*<Provider>\{children\}<\/Provider>/);
   assert.doesNotMatch(provider, /WelcomePopup/);
   assert.match(popup, /data-welcome-popup=/);
+  assert.match(popup, /data-welcome-stage=/);
+  assert.match(popup, /data-welcome-capture=/);
+  assert.match(popup, /typeRole="title"/);
+  assert.match(popup, /variant="glass"/);
   assert.match(popup, /WELCOME_POPUP_DELAY_MS/);
   assert.match(popup, /readWelcomePopupState/);
   assert.match(popup, /writeWelcomePopupMinimized/);
@@ -109,7 +113,7 @@ test("nested layouts do not remount the popup; live console still sits under the
   assert.doesNotMatch(run, /WelcomePopup/);
   assert.match(run, /main id="main-content"/);
   const popupLib = read("lib/welcome-popup.ts");
-  assert.match(popupLib, /export const WELCOME_POPUP_DELAY_MS = 8000;/);
+  assert.match(popupLib, /export const WELCOME_POPUP_DELAY_MS = 3000;/);
   assert.match(popupLib, /INPUT.*TEXTAREA.*SELECT/s);
   assert.match(popupLib, /WELCOME_POPUP_STATE_STORAGE_KEY/);
   assert.match(popupLib, /readWelcomePopupState/);

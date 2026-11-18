@@ -7,7 +7,7 @@
 import { tryCatch } from "@zedtech/zedkit-core";
 
 /** Delay before the welcome popup opens. Change this one number to retune it. */
-export const WELCOME_POPUP_DELAY_MS = 8000;
+export const WELCOME_POPUP_DELAY_MS = 3000;
 
 /** Retry cadence while the visitor is typing (e.g. a live console control has focus). */
 export const WELCOME_POPUP_FOCUS_RETRY_MS = 2000;
