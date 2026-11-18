@@ -36,21 +36,43 @@ test("root layout mounts the welcome popup once, ahead of Provider, so every rou
   assert.doesNotMatch(provider, /WelcomePopup/);
   assert.match(popup, /data-welcome-popup=/);
   assert.match(popup, /WELCOME_POPUP_DELAY_MS/);
-  assert.match(popup, /readWelcomePopupDismissed/);
-  assert.match(popup, /writeWelcomePopupDismissed/);
+  assert.match(popup, /readWelcomePopupState/);
+  assert.match(popup, /writeWelcomePopupMinimized/);
   assert.match(popup, /isTypingTarget\(document\.activeElement\)/);
   assert.match(popup, /WELCOME_POPUP_FOCUS_RETRY_MS/);
   assert.match(popup, /DialogContent/);
+  assert.match(popup, /DialogFooter/);
   assert.match(popup, /closeLabel/);
-  assert.match(popup, /welcomePopupCopy\.dismiss/);
+  assert.match(popup, /welcomePopupCopy\.minimize/);
+  assert.match(popup, /data-welcome-capture=/);
   assert.match(popup, /FollowProgressForm/);
+  assert.match(popup, /renderActions/);
   assert.match(popup, /SITE_STORY_URL/);
+  assert.match(popup, /WidgetButton/);
+  assert.match(popup, /data-welcome-pill=/);
+  assert.match(popup, /data-welcome-pill-host=/);
+  const signature = read("app/docs-signature.css");
+  assert.match(signature, /\[data-welcome-pill-host\]/);
+  assert.match(signature, /padding-bottom: max\(0\.75rem, env\(safe-area-inset-bottom\)\);/);
+  assert.match(popup, /minimized && !open/);
+  assert.match(popup, /welcomePopupCopy\.pill\.reopen/);
+  assert.match(popup, /aria-haspopup="dialog"/);
   assert.match(form, /NEXT_PUBLIC_NEWSLETTER_ENDPOINT|NEWSLETTER_ENDPOINT_ENV/);
-  assert.match(form, /data-follow-progress="fallback"/);
   assert.match(form, /data-follow-progress="form"/);
+  assert.match(form, /data-follow-progress="unwired"/);
+  assert.doesNotMatch(form, /data-follow-progress="fallback"/);
+  assert.doesNotMatch(form, /endpoint === null\) return/);
+  assert.match(
+    formState,
+    /if \(endpoint === null\) \{\s*setStatus\("unwired"\);[\s\S]*return;\s*\}\s*setStatus\("submitting"\);/,
+  );
   assert.match(form, /name="firstname"/);
   assert.match(form, /name="email"/);
   assert.match(form, /aria-describedby/);
+  assert.match(form, /renderActions\?/);
+  assert.match(formState, /endpoint: string \| null/);
+  assert.match(formState, /endpoint === null/);
+  assert.match(formState, /"unwired"/);
   assert.match(formState, /writeStoredFirstname/);
   assert.match(formState, /writeStoredEmail/);
   assert.match(formState, /followProgressPayload\(trimmedFirstname, trimmedEmail\)/);
@@ -58,6 +80,8 @@ test("root layout mounts the welcome popup once, ahead of Provider, so every rou
   assert.match(form, /copy\.retry/);
   assert.match(copy, /invalidFirstname/);
   assert.match(copy, /invalidEmail/);
+  assert.match(copy, /unwired/);
+  assert.match(copy, /nothing was sent/);
   assert.doesNotMatch(popup, /mailto:/);
   assert.doesNotMatch(form, /mailto:/);
 });
@@ -85,8 +109,11 @@ test("nested layouts do not remount the popup; live console still sits under the
   assert.doesNotMatch(run, /WelcomePopup/);
   assert.match(run, /main id="main-content"/);
   const popupLib = read("lib/welcome-popup.ts");
-  assert.match(popupLib, /export const WELCOME_POPUP_DELAY_MS = \d+/);
+  assert.match(popupLib, /export const WELCOME_POPUP_DELAY_MS = 8000;/);
   assert.match(popupLib, /INPUT.*TEXTAREA.*SELECT/s);
+  assert.match(popupLib, /WELCOME_POPUP_STATE_STORAGE_KEY/);
+  assert.match(popupLib, /readWelcomePopupState/);
+  assert.match(popupLib, /writeWelcomePopupMinimized/);
 });
 
 test("the lab banner is gone: no component, no compact chrome, no mode storage", () => {

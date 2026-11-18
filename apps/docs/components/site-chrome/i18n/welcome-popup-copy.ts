@@ -1,11 +1,16 @@
 /** English copy for the welcome popup and follow-progress form. Keys only; no markup. */
 export const welcomePopupCopy = {
-  dialogLabel: "Welcome to the lab",
   headline: "Welcome to the lab. Mind the sawdust.",
-  body: "Quick safety talk before you look around. The @zedtech/zedkit-* packages on npm are my workbench, not a store shelf, so don't ship them to production. The code itself is another story: copy it, paste it, steal the good bits. That's what it's here for.",
-  story: "Read the story behind zedkit",
+  notice:
+    "The @zedtech/zedkit-* packages on npm are my workbench, not a store shelf, so don't ship them to production.",
+  gift: "The code itself is another story: copy it, paste it, steal the good bits.",
+  story: "Read the story behind zedkit (in French)",
   close: "Close",
-  dismiss: "Keep browsing",
+  minimize: "Keep browsing",
+  pill: {
+    label: "Hear when it opens",
+    reopen: "Reopen the welcome message",
+  },
   capture: {
     title: "Want the version you can build on?",
     description:
@@ -25,8 +30,10 @@ export const welcomePopupCopy = {
     retry: "Try again",
     consent: "One email when the repo opens. Nothing else, never shared, unsubscribe anytime.",
   },
-  fallback: {
-    line: "I'm turning this lab into a repo you can actually depend on. No signup form is wired here yet — follow along in the meantime:",
+  unwired: {
+    message:
+      "The list isn't wired on this build, so nothing was sent. Your name and email stay saved in this browser. They'll be right here when the list opens.",
+    secondaryLead: "Follow along in the meantime:",
     medium: "Follow on Medium",
     github: "Watch on GitHub",
   },

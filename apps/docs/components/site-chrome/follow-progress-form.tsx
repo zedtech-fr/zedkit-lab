@@ -1,6 +1,6 @@
 "use client";
 
-import { useId } from "react";
+import { useId, type ReactNode } from "react";
 import { Button, Input, Label, Stack, Text } from "@zedtech/zedkit-ui";
 
 import { OffPathLink } from "@/components/site-chrome/off-path-link";
@@ -12,41 +12,33 @@ import {
 import { readNewsletterEndpoint } from "@/lib/follow-progress";
 import { SITE_GITHUB_URL, SITE_STORY_URL } from "@/lib/site-links.mjs";
 
-function FollowProgressFallback() {
-  const copy = welcomePopupCopy.fallback;
-  return (
-    <Stack gap="tight" data-follow-progress="fallback">
-      <Text variant="muted" className="text-dense">
-        {copy.line}
-      </Text>
-      <Stack direction="horizontal" gap="sm" className="flex-wrap">
-        <OffPathLink href={SITE_STORY_URL} className="text-dense link-offset hover:underline">
-          {copy.medium}
-        </OffPathLink>
-        <OffPathLink href={SITE_GITHUB_URL} className="text-dense link-offset hover:underline">
-          {copy.github}
-        </OffPathLink>
-      </Stack>
-    </Stack>
-  );
-}
-
-/** Firstname + email capture. Shared by the welcome popup and the home follow section. */
-export function FollowProgressForm() {
+/**
+ * Firstname + email capture, always rendered. Shared by the welcome popup and
+ * the home follow section. When no endpoint is baked in, submit keeps the
+ * inputs saved locally and says so honestly instead of posting anywhere.
+ * `renderActions` lets the dialog place the submit in its own footer beside
+ * the minimize control; otherwise the submit sits in its own row.
+ */
+export function FollowProgressForm({
+  renderActions,
+}: {
+  renderActions?: (submit: ReactNode) => ReactNode;
+}) {
   const endpoint = readNewsletterEndpoint(process.env.NEXT_PUBLIC_NEWSLETTER_ENDPOINT);
-  if (endpoint === null) return <FollowProgressFallback />;
-  return <FollowProgressFields endpoint={endpoint} />;
-}
-
-function FollowProgressFields({ endpoint }: { endpoint: string }) {
   const form = useFollowProgressForm(endpoint);
+  const formId = useId();
+  const submit = (
+    <Button type="submit" form={formId} disabled={form.status === "submitting"}>
+      {form.status === "submitting" ? form.copy.pending : form.copy.submit}
+    </Button>
+  );
   return (
     <Stack gap="sm" data-follow-progress="form">
       <Text variant="muted" className="text-dense">
         {form.copy.consent}
       </Text>
-      <form onSubmit={form.onSubmit} noValidate>
-        <Stack gap="sm">
+      <form id={formId} onSubmit={form.onSubmit} noValidate>
+        <Stack gap="sm" className="sm:grid sm:grid-pair">
           <FirstnameField
             value={form.firstname}
             invalid={form.fieldError === "firstname"}
@@ -65,9 +57,6 @@ function FollowProgressFields({ endpoint }: { endpoint: string }) {
             placeholder={form.copy.emailPlaceholder}
             onChange={form.onEmailChange}
           />
-          <Button type="submit" disabled={form.status === "submitting"}>
-            {form.status === "submitting" ? form.copy.pending : form.copy.submit}
-          </Button>
         </Stack>
       </form>
       <FollowProgressOutcome
@@ -77,6 +66,36 @@ function FollowProgressFields({ endpoint }: { endpoint: string }) {
         retry={form.copy.retry}
         onRetry={form.clearError}
       />
+      {form.status === "unwired" ? <UnwiredNote /> : null}
+      {renderActions ? (
+        renderActions(submit)
+      ) : (
+        <Stack direction="horizontal" gap="sm">
+          {submit}
+        </Stack>
+      )}
+    </Stack>
+  );
+}
+
+function UnwiredNote() {
+  const copy = welcomePopupCopy.unwired;
+  return (
+    <Stack gap="tight" data-follow-progress="unwired">
+      <Text role="status" className="text-dense">
+        {copy.message}
+      </Text>
+      <Text variant="muted" className="text-dense">
+        {copy.secondaryLead}
+      </Text>
+      <Stack direction="horizontal" gap="sm" className="flex-wrap">
+        <OffPathLink href={SITE_STORY_URL} className="text-dense link-offset hover:underline">
+          {copy.medium}
+        </OffPathLink>
+        <OffPathLink href={SITE_GITHUB_URL} className="text-dense link-offset hover:underline">
+          {copy.github}
+        </OffPathLink>
+      </Stack>
     </Stack>
   );
 }

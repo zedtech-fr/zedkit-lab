@@ -180,8 +180,9 @@
   pointer-events: none;
 }
 
-/* Identity dock. Clear of the screen edge and the home indicator, on the header layer so a menu still covers it. */
-[data-slot="identity-dock"] {
+/* Floating pills (identity dock, welcome pill). Clear of the screen edge and the home indicator, on the header layer so a menu still covers it. */
+[data-slot="identity-dock"],
+[data-welcome-pill-host] {
   z-index: var(--z-header);
   max-width: calc(100vw - 1.5rem);
   padding-bottom: max(0.75rem, env(safe-area-inset-bottom));

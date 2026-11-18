@@ -5,9 +5,13 @@ const {
   WELCOME_POPUP_DELAY_MS,
   WELCOME_POPUP_FOCUS_RETRY_MS,
   WELCOME_POPUP_DISMISSED_STORAGE_KEY,
+  WELCOME_POPUP_STATE_MINIMIZED,
+  WELCOME_POPUP_STATE_STORAGE_KEY,
   isTypingTarget,
   readWelcomePopupDismissed,
+  readWelcomePopupState,
   writeWelcomePopupDismissed,
+  writeWelcomePopupMinimized,
 } = await import("./welcome-popup.ts");
 
 function memoryStorage() {
@@ -49,6 +53,34 @@ test("dismiss persists once per visitor and survives a broken store", () => {
   };
   assert.equal(readWelcomePopupDismissed(broken), false);
   writeWelcomePopupDismissed(broken);
+});
+
+test("popup mode persists minimized vs not-yet-shown and honors a legacy dismiss", () => {
+  const { store, storage } = memoryStorage();
+  assert.equal(readWelcomePopupState(null), "not-yet-shown");
+  assert.equal(readWelcomePopupState(storage), "not-yet-shown");
+  writeWelcomePopupMinimized(storage);
+  assert.equal(store.get(WELCOME_POPUP_STATE_STORAGE_KEY), WELCOME_POPUP_STATE_MINIMIZED);
+  assert.equal(WELCOME_POPUP_STATE_MINIMIZED, "minimized");
+  assert.equal(readWelcomePopupState(storage), "minimized");
+  const legacy = memoryStorage();
+  writeWelcomePopupDismissed(legacy.storage);
+  assert.equal(readWelcomePopupState(legacy.storage), "minimized");
+  const unknown = memoryStorage();
+  unknown.storage.setItem(WELCOME_POPUP_STATE_STORAGE_KEY, "open");
+  assert.equal(readWelcomePopupState(unknown.storage), "not-yet-shown");
+  writeWelcomePopupMinimized(storage);
+  assert.equal(readWelcomePopupState(storage), "minimized");
+  const broken = {
+    getItem() {
+      throw new Error("blocked");
+    },
+    setItem() {
+      throw new Error("blocked");
+    },
+  };
+  assert.equal(readWelcomePopupState(broken), "not-yet-shown");
+  writeWelcomePopupMinimized(broken);
 });
 
 test("typing targets hold the open so a console control keeps its keystrokes", () => {

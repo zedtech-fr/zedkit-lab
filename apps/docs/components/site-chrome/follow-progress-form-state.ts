@@ -15,13 +15,18 @@ import {
   writeStoredFirstname,
 } from "@/lib/follow-progress";
 
-export type FollowProgressStatus = "idle" | "submitting" | "success" | "error";
+export type FollowProgressStatus = "idle" | "submitting" | "success" | "error" | "unwired";
 
 function storage(): Storage | null {
   return typeof window === "undefined" ? null : window.localStorage;
 }
 
-export function useFollowProgressForm(endpoint: string) {
+/**
+ * Capture state for one form instance. A null endpoint means the list is not
+ * wired on this build: submit validates and persists, then reports `unwired`
+ * honestly instead of posting anywhere or faking success.
+ */
+export function useFollowProgressForm(endpoint: string | null) {
   const copy = welcomePopupCopy.form;
   const [firstname, setFirstname] = useState("");
   const [email, setEmail] = useState("");
@@ -66,6 +71,11 @@ export function useFollowProgressForm(endpoint: string) {
       return;
     }
     setFieldError(null);
+    if (endpoint === null) {
+      setStatus("unwired");
+      setError(null);
+      return;
+    }
     setStatus("submitting");
     setError(null);
     const result = await tryCatchAsync(async () => {
