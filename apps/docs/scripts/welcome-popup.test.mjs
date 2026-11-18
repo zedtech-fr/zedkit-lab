@@ -38,7 +38,11 @@ test("root layout mounts the welcome popup once, ahead of Provider, so every rou
   assert.match(popup, /data-welcome-stage=/);
   assert.match(popup, /data-welcome-capture=/);
   assert.match(popup, /typeRole="title"/);
-  assert.match(popup, /variant="glass"/);
+  assert.match(popup, /border-0/);
+  assert.match(popup, /bg-transparent/);
+  assert.match(popup, /overflow-hidden/);
+  assert.match(popup, /rounded-2xl/);
+  assert.doesNotMatch(popup, /variant="glass"/);
   assert.match(popup, /WELCOME_POPUP_DELAY_MS/);
   assert.match(popup, /readWelcomePopupState/);
   assert.match(popup, /writeWelcomePopupMinimized/);
@@ -58,6 +62,11 @@ test("root layout mounts the welcome popup once, ahead of Provider, so every rou
   const signature = read("app/docs-signature.css");
   assert.match(signature, /\[data-welcome-pill-host\]/);
   assert.match(signature, /padding-bottom: max\(0\.75rem, env\(safe-area-inset-bottom\)\);/);
+  assert.match(signature, /\[data-slot="dialog-content"\]\[data-welcome-popup\]/);
+  assert.match(signature, /border: 0;/);
+  assert.match(signature, /overflow: hidden;/);
+  assert.match(signature, /border-radius: var\(--radius-2xl, 1rem\);/);
+  assert.match(signature, /backdrop-filter: var\(--zk-glass-overlay-filter\);/);
   assert.match(popup, /minimized && !open/);
   assert.match(popup, /welcomePopupCopy\.pill\.reopen/);
   assert.match(popup, /aria-haspopup="dialog"/);

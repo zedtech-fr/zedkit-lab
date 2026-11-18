@@ -189,51 +189,48 @@
 }
 
 /*
- * Welcome popup: same inverted stage as the home hero run card and featured
- * six-sentences panels. Snapshot ink on the dialog so the inner glass form
- * can restore readable type. Do not scope to #home-page — the popup is global.
+ * Welcome popup: one translucent violet glass panel. Styles live on the
+ * Dialog surface itself so default solid chrome (border, bg-card, a tighter
+ * radius) cannot peek around the gradient as a white ring. No nested card.
+ * Do not scope to #home-page — the popup is global.
  */
-[data-welcome-popup] {
-  --welcome-ink: var(--foreground);
-  --welcome-muted: var(--muted-foreground);
-  --welcome-ring: var(--ring);
-  padding: 0;
-  overflow: hidden;
-  border-color: transparent;
-  background-color: transparent;
-  box-shadow: none;
-}
-
-[data-welcome-stage] {
+[data-slot="dialog-content"][data-welcome-popup] {
   --foreground: var(--primary-foreground);
   --muted-foreground: var(--primary-foreground);
   --ring: var(--primary-foreground);
-  position: relative;
+  /* Do not set position: it must stay fixed (dialog-center). relative
+     un-centers the modal and drops it into document flow. */
   isolation: isolate;
   overflow: hidden;
-  padding: calc(var(--spacing) * 6);
+  --zk-glass-highlight: 0 0 0 transparent;
+  border: 0;
+  outline: none;
+  /* Drop shadow only: --zk-shadow-xl includes --zk-glass-highlight, a 1px inset
+     white edge that reads as a ring around the modal. */
+  box-shadow: 0 28px 64px -18px hsl(var(--zk-shadow-color, 230 30% 20%) / 0.3);
   border-radius: var(--radius-2xl, 1rem);
-  background-color: hsl(var(--primary));
-  background-image: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
-  box-shadow: var(--zk-shadow-xl);
+  padding: calc(var(--spacing) * 6);
+  background-color: hsl(var(--primary) / 0.84);
+  background-image: linear-gradient(135deg, hsl(var(--primary) / 0.9) 0%, hsl(var(--accent) / 0.76) 100%);
+  -webkit-backdrop-filter: var(--zk-glass-overlay-filter);
+  backdrop-filter: var(--zk-glass-overlay-filter);
   color: hsl(var(--primary-foreground));
 }
 
 @media (width >= 40rem) {
-  [data-welcome-stage] {
+  [data-slot="dialog-content"][data-welcome-popup] {
     padding: calc(var(--spacing) * 8);
   }
 }
 
-[data-welcome-stage]::before,
-[data-welcome-stage]::after,
-[data-welcome-blob] {
+[data-slot="dialog-content"][data-welcome-popup]::before,
+[data-slot="dialog-content"][data-welcome-popup]::after {
   content: "";
   position: absolute;
   pointer-events: none;
 }
 
-[data-welcome-stage]::before {
+[data-slot="dialog-content"][data-welcome-popup]::before {
   top: -4.5rem;
   right: -4rem;
   width: 15rem;
@@ -242,7 +239,7 @@
   background-color: hsl(var(--primary-foreground) / 0.1);
 }
 
-[data-welcome-stage]::after {
+[data-slot="dialog-content"][data-welcome-popup]::after {
   top: -40%;
   right: 22%;
   width: 5.5rem;
@@ -251,26 +248,7 @@
   background-color: hsl(var(--primary-foreground) / 0.08);
 }
 
-[data-welcome-blob] {
-  border-radius: 9999px;
-  aspect-ratio: 1;
-}
-
-[data-welcome-blob="1"] {
-  left: -3.75rem;
-  top: 3.75rem;
-  width: 13.75rem;
-  background: hsl(var(--accent) / 0.55);
-}
-
-[data-welcome-blob="2"] {
-  right: 3.75rem;
-  bottom: 1.875rem;
-  width: 5.625rem;
-  background: hsl(var(--accent) / 0.7);
-}
-
-[data-welcome-stage] > :not([data-welcome-blob]) {
+[data-welcome-stage] {
   position: relative;
   z-index: 1;
 }
@@ -292,19 +270,46 @@
   color: hsl(var(--primary-foreground));
 }
 
-[data-welcome-capture] {
-  --foreground: var(--welcome-ink);
-  --muted-foreground: var(--welcome-muted);
-  --ring: var(--welcome-ring);
-  color: hsl(var(--welcome-ink));
+[data-welcome-popup] [data-slot="button"][type="submit"] {
+  background-color: hsl(var(--primary-foreground));
+  color: hsl(var(--primary));
+  border-color: transparent;
+}
+
+[data-welcome-popup] [data-slot="button"][type="button"] {
+  background-color: hsl(var(--primary-foreground) / 0.12);
+  color: hsl(var(--primary-foreground));
+  border-color: hsl(var(--primary-foreground) / 0.45);
+}
+
+[data-welcome-popup] input {
+  background-color: hsl(var(--primary-foreground) / 0.14);
+  border-color: hsl(var(--primary-foreground) / 0.32);
+  color: hsl(var(--primary-foreground));
 }
 
 @media (prefers-reduced-transparency: reduce) {
-  [data-welcome-stage]::before,
-  [data-welcome-stage]::after,
-  [data-welcome-blob] {
+  [data-slot="dialog-content"][data-welcome-popup] {
+    background-color: hsl(var(--primary));
+    background-image: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  [data-slot="dialog-content"][data-welcome-popup]::before,
+  [data-slot="dialog-content"][data-welcome-popup]::after {
     background-color: hsl(var(--primary-foreground) / 0.06);
-    background: hsl(var(--primary-foreground) / 0.06);
+  }
+}
+
+@media (forced-colors: active) {
+  [data-slot="dialog-content"][data-welcome-popup] {
+    border: var(--zk-border-width, 1px) solid CanvasText;
+    background-color: Canvas;
+    background-image: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    color: CanvasText;
   }
 }
 

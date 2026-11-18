@@ -12,7 +12,6 @@ import {
   Heading,
   Stack,
   StatusDot,
-  Surface,
   Text,
   WidgetButton,
 } from "@zedtech/zedkit-ui";
@@ -36,11 +35,11 @@ import {
  * Customers:        Developers reading the docs on a laptop or a phone.
  * Customer personas: Hurried scanner (skims, dismisses, reopens through a pill) and interested reader (leaves
  *                   a name on the first visit); both burned by hype and drip campaigns; both often on phones.
- * UI decisions:     Home-DA inverted stage (hero / featured six-sentences): indigo-to-violet panel, decorative
- *                   blobs, title-scale headline, then a frosted glass capture card that restores ink, because
- *                   the popup must feel like the home, not official Dialog chrome. Kit primary submit in the
- *                   glass card. Minimized WidgetButton pill just above the identity dock, because: the scanner
- *                   dismisses without losing the ask, in the dock family.
+ * UI decisions:     One translucent violet glass panel — the Dialog surface itself — because a second card
+ *                   or the default solid chrome (border, bg-card) reads as a white ring and a messy
+ *                   white–violet–white stack. Title, notice, and the capture form share that one surface.
+ *                   Inverted kit buttons keep contrast on the violet. Minimized WidgetButton pill sits
+ *                   just above the identity dock, in the dock family.
  *
  * Delayed welcome popup: lab notice + follow-progress capture. Mounted once
  * from the root layout so it can appear on any landing route (home, docs,
@@ -125,10 +124,12 @@ export function WelcomePopup() {
   return (
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="sm:max-w-reading" closeLabel={welcomePopupCopy.close} data-welcome-popup="">
+        <DialogContent
+          className="sm:max-w-reading overflow-hidden border-0 bg-transparent p-0 shadow-none rounded-2xl"
+          closeLabel={welcomePopupCopy.close}
+          data-welcome-popup=""
+        >
           <Stack gap="md" data-welcome-stage="">
-            <span aria-hidden="true" data-welcome-blob="1" />
-            <span aria-hidden="true" data-welcome-blob="2" />
             <DialogHeader>
               <DialogTitle asChild>
                 <Heading level={2} typeRole="title">
@@ -142,26 +143,22 @@ export function WelcomePopup() {
             <OffPathLink href={SITE_STORY_URL} className="w-fit link-offset hover:underline">
               {welcomePopupCopy.story}
             </OffPathLink>
-            <Surface variant="glass" elevation={0} radius="lg" padding="md" data-welcome-capture="">
-              <Stack gap="sm">
-                <Stack gap="tight">
-                  <Text typeRole="label">{welcomePopupCopy.capture.title}</Text>
-                  <Text typeRole="body" variant="muted">
-                    {welcomePopupCopy.capture.description}
-                  </Text>
-                </Stack>
-                <FollowProgressForm
-                  renderActions={(submit) => (
-                    <DialogFooter>
-                      <Button type="button" variant="outline" onClick={minimize}>
-                        {welcomePopupCopy.minimize}
-                      </Button>
-                      {submit}
-                    </DialogFooter>
-                  )}
-                />
+            <Stack gap="sm" data-welcome-capture="">
+              <Stack gap="tight">
+                <Text typeRole="label">{welcomePopupCopy.capture.title}</Text>
+                <Text typeRole="body">{welcomePopupCopy.capture.description}</Text>
               </Stack>
-            </Surface>
+              <FollowProgressForm
+                renderActions={(submit) => (
+                  <DialogFooter>
+                    <Button type="button" variant="outline" onClick={minimize}>
+                      {welcomePopupCopy.minimize}
+                    </Button>
+                    {submit}
+                  </DialogFooter>
+                )}
+              />
+            </Stack>
           </Stack>
         </DialogContent>
       </Dialog>
