@@ -6,7 +6,7 @@ Checked 2026-10-25 against [shadcn registry docs](https://ui.shadcn.com/docs/reg
 (`registry.json`, `registry-item.json`, `shadcn build`, namespaces, GitHub
 registries, FAQ) and a local install into a fresh Next app. CLI: `shadcn@4.22.1`.
 
-Tracking: [#187](https://github.com/zedtech-fr/zedkit/issues/187).
+Tracking: [#187](https://github.com/zedtech-fr/zedkit-lab/issues/187).
 
 Goal: a user who does not want the npm package can copy a kit brick into their
 project the same way they add a shadcn item: `npx shadcn@latest add <url-or-name>`.

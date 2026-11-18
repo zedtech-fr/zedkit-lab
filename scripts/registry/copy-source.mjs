@@ -1,7 +1,11 @@
 /** @typedef {{ name: string, registryDependencies?: string[], cssVars?: unknown, css?: unknown }} RegistryItem */
 /** @typedef {{ items?: RegistryItem[] }} RegistryCatalog */
 
-export const KIT_REGISTRY_REPO = "zedtech-fr/zedkit";
+/** Current GitHub repo slug. Historical shadcn shorthand used zedtech-fr/zedkit/. */
+export const KIT_REGISTRY_REPO = "zedtech-fr/zedkit-lab";
+
+/** Repo prefixes accepted in registryDependency strings (current + retired shorthand). */
+export const KIT_REGISTRY_REPO_PREFIXES = ["zedtech-fr/zedkit-lab", "zedtech-fr/zedkit"];
 
 /** Bare names that intentionally resolve to the upstream shadcn registry. */
 export const SHADCN_SHARED_REGISTRY_DEPS = new Set(["utils"]);
@@ -11,8 +15,11 @@ export function kitRegistryDep(brickName) {
 }
 
 function resolveKitSibling(dep) {
-  if (dep.startsWith(`${KIT_REGISTRY_REPO}/`)) {
-    return dep.slice(KIT_REGISTRY_REPO.length + 1);
+  const prefixes = [...KIT_REGISTRY_REPO_PREFIXES].sort((a, b) => b.length - a.length);
+  for (const repo of prefixes) {
+    if (dep.startsWith(`${repo}/`)) {
+      return dep.slice(repo.length + 1);
+    }
   }
   if (dep.startsWith("@zedkit/")) {
     return dep.slice("@zedkit/".length);

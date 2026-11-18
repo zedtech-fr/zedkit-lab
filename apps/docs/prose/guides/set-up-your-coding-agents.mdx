@@ -14,7 +14,7 @@ You use Cursor, Claude Code, Codex, or similar tools and want a repo-local copy 
 ## Prerequisites
 
 - Node.js 22+ and a git repository (any stack).
-- One provider for `init`: `cursor`, `claude`, `codex`, `muse`, or `all` (see `zedkit-ai init --help` in [`packages/ai/src/cli.ts`](https://github.com/zedtech-fr/zedkit/blob/main/packages/ai/src/cli.ts)).
+- One provider for `init`: `cursor`, `claude`, `codex`, `muse`, or `all` (see `zedkit-ai init --help` in [`packages/ai/src/cli.ts`](https://github.com/zedtech-fr/zedkit-lab/blob/main/packages/ai/src/cli.ts)).
 
 ## Install
 
@@ -44,7 +44,7 @@ You should see preset names, subagents (for example `explorer`), the entry comma
 {{snippet:ai-tutorial-init.sh}}
 ```
 
-`init` **never overwrites** existing files; it skips paths that already exist ([`install.ts`](https://github.com/zedtech-fr/zedkit/blob/main/packages/ai/src/install.ts)). This tutorial uses `--preset full` so every bundled skill is on disk (the installed command is still only `/zedkit-ai`) — `validate` checks that link ([`kit.json`](https://github.com/zedtech-fr/zedkit/blob/main/packages/ai/kit/kit.json)). For Cursor it adds `.cursor/rules/project.mdc` and copies skills into `.agents/`.
+`init` **never overwrites** existing files; it skips paths that already exist ([`install.ts`](https://github.com/zedtech-fr/zedkit-lab/blob/main/packages/ai/src/install.ts)). This tutorial uses `--preset full` so every bundled skill is on disk (the installed command is still only `/zedkit-ai`) — `validate` checks that link ([`kit.json`](https://github.com/zedtech-fr/zedkit-lab/blob/main/packages/ai/kit/kit.json)). For Cursor it adds `.cursor/rules/project.mdc` and copies skills into `.agents/`.
 
 Preview without writing:
 
@@ -66,7 +66,7 @@ Stdout ends with `dry run: nothing written` and no new files on disk.
 ok — structural kit checks only (skills, agents, commands, wiring, tokenomics, atlas paths); browser rendering, focus, hosting and on-target behavior are NOT checked by validate
 ```
 
-If skills, commands, or provider copies drift, you get `path: message` lines and a non-zero exit (see `validate` in [`cli.ts`](https://github.com/zedtech-fr/zedkit/blob/main/packages/ai/src/cli.ts)).
+If skills, commands, or provider copies drift, you get `path: message` lines and a non-zero exit (see `validate` in [`cli.ts`](https://github.com/zedtech-fr/zedkit-lab/blob/main/packages/ai/src/cli.ts)).
 
 `validate` checks file shape and drift — it does **not** run your coding agent. After init, use your tool’s normal workflow to open the repo; the wired rules and skills are the files `init` created.
 
@@ -91,7 +91,7 @@ You already maintain team rules at the root:
 Use our internal style guide.
 ```
 
-Run the same `init` command. When `AGENTS.md` exists but lacks the kit ladder section, `init` **appends** the ladder instead of replacing your text ([`install.ts`](https://github.com/zedtech-fr/zedkit/blob/main/packages/ai/src/install.ts)). Run `validate` again; stdout should still start with `ok — structural kit checks only`. Automated checks cover this flow.
+Run the same `init` command. When `AGENTS.md` exists but lacks the kit ladder section, `init` **appends** the ladder instead of replacing your text ([`install.ts`](https://github.com/zedtech-fr/zedkit-lab/blob/main/packages/ai/src/install.ts)). Run `validate` again; stdout should still start with `ok — structural kit checks only`. Automated checks cover this flow.
 
 ## What gets installed
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { LabNoticeBanner } from "@/components/site-chrome/lab-notice-banner";
 import { SkipLink } from "@/components/site-chrome/skip-link";
 
 import { rootLayoutCopy } from "@/app/i18n/root-layout-copy";
@@ -58,6 +59,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       </head>
       <body>
         <SkipLink />
+        <LabNoticeBanner />
         <Provider>{children}</Provider>
       </body>
     </html>

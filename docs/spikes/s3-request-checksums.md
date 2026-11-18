@@ -1,6 +1,6 @@
 # Spike: S3 request checksum defaults (`WHEN_REQUIRED`)
 
-Checked 2026-10-29 for [#626](https://github.com/zedtech-fr/zedkit/issues/626) (storage item).
+Checked 2026-10-29 for [#626](https://github.com/zedtech-fr/zedkit-lab/issues/626) (storage item).
 
 ## Question
 

@@ -5,7 +5,7 @@ behind `ReviewPort`, merged at docs build into a version-1
 `PublicIssueIndex` (`kind: public-github-runs`; `issues` +
 `pullRequests`):
 
-1. **GitHub REST** for `zedtech-fr/zedkit` (public): issue number,
+1. **GitHub REST** for `zedtech-fr/zedkit-lab` (public): issue number,
    title, state, and linked PRs (runs-API `issue`/`pr` union closing
    keywords in the PR body). Optional build-time token
    (`ZEDKIT_GITHUB_READ_TOKEN`, else `GITHUB_TOKEN`) only raises the

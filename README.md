@@ -1,3 +1,7 @@
+> **This is a lab.** The `@zedtech/zedkit-*` npm packages are an experiment — don't use them in production. Copy, paste, or steal anything useful; that's what the code is for.
+>
+> [Read the story behind zedkit](https://medium.com/@romain-zt/zedkit-jai-donn%C3%A9-les-cl%C3%A9s-%C3%A0-grokbot-et-gard%C3%A9-mon-t%C3%A9l%C3%A9phone-ce86bfc96636) · [Watch this repo for updates](https://github.com/zedtech-fr/zedkit-lab)
+
 <div align="center">
 
 <picture>
@@ -12,7 +16,7 @@
 A UI/AI kit: a polished React UI kit with real identities, and a top-notch AI setup<br>
 one prompt away, with the server, SEO and quality packages behind them. Open source, MIT.
 
-[![ci](https://github.com/zedtech-fr/zedkit/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/zedtech-fr/zedkit/actions/workflows/ci.yml?query=branch%3Amain)
+[![ci](https://github.com/zedtech-fr/zedkit-lab/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/zedtech-fr/zedkit-lab/actions/workflows/ci.yml?query=branch%3Amain)
 [![npm](https://img.shields.io/npm/v/@zedtech/zedkit-ui?label=zedkit-ui&color=5b4bdb)](https://www.npmjs.com/package/@zedtech/zedkit-ui)
 [![license: MIT](https://img.shields.io/badge/license-MIT-5b4bdb.svg)](LICENSE)
 

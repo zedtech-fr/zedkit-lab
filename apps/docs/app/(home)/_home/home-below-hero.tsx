@@ -1,4 +1,5 @@
 import { HomeClosingSection } from "./sections/home-closing-section";
+import { HomeFollowSection } from "./sections/home-follow-section";
 import { HomeIdentitiesSection } from "./sections/home-identities-section";
 import { HomeLimitsSection } from "./sections/home-limits-section";
 import { HomeManifestoSection } from "./sections/home-manifesto-section";
@@ -9,7 +10,7 @@ import { HomeSixSentencesSection } from "./sections/home-six-sentences-section";
 /**
  * Marketing sections below the hero, in the order a visitor decides: the
  * three-card same-idea band, six quote/reply cards, hash landing, then the same task
- * in four looks, then limits, origin quote, closing ask.
+ * in four looks, then limits, origin quote, closing ask, then follow-progress.
  * Kept in the main home payload (not dynamically imported) so section anchors stay in the live layout on first paint.
  *
  * Compose-UI brief:
@@ -46,6 +47,7 @@ export function HomeBelowHero({
       <HomeLimitsSection />
       <HomeManifestoSection />
       <HomeClosingSection />
+      <HomeFollowSection />
     </div>
   );
 }

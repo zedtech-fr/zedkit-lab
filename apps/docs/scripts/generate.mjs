@@ -181,7 +181,7 @@ function buildMaturityCompatibility(catalog) {
     packageManager: rootPkg.packageManager ?? "—",
   };
   const catalogMaturityReadmeUrl =
-    "https://github.com/zedtech-fr/zedkit/blob/main/docs/catalog/README.md#maturity";
+    "https://github.com/zedtech-fr/zedkit-lab/blob/main/docs/catalog/README.md#maturity";
   const maturityDocHref = "/docs/maturity-and-compatibility";
   return `// GENERATED from docs/catalog/catalog.json + package manifests — do not edit.\nexport const maturityDocHref: string = ${JSON.stringify(maturityDocHref)};\n\nexport const catalogMaturityReadmeUrl: string = ${JSON.stringify(catalogMaturityReadmeUrl)};\n\nexport const maturityCounts: Record<string, number> = ${JSON.stringify(maturityCounts, null, 2)};\n\nexport interface CompatibilityRow {\n  package: string;\n  version: string;\n  node: string;\n  peers: string;\n}\n\nexport const compatibilityRows: CompatibilityRow[] = ${JSON.stringify(compatibilityRows, null, 2)};\n\nexport const workspaceToolchain: { node: string; packageManager: string } = ${JSON.stringify(workspaceToolchain)};\n`;
 }
@@ -648,8 +648,8 @@ export function generate(outDir) {
   };
   const uiVersion = packageVersion("ui");
   const uiChangelogUrl =
-    "https://github.com/zedtech-fr/zedkit/blob/main/packages/ui/CHANGELOG.md";
-  const uiReleasesUrl = "https://github.com/zedtech-fr/zedkit/releases";
+    "https://github.com/zedtech-fr/zedkit-lab/blob/main/packages/ui/CHANGELOG.md";
+  const uiReleasesUrl = "https://github.com/zedtech-fr/zedkit-lab/releases";
   const galleryModule = `// GENERATED from docs/catalog/catalog.json — do not edit.\nexport interface GalleryCard {\n  href: string;\n  title: string;\n  need: string;\n  status: string;\n  detail: string;\n  demo: string | null;\n}\n\nexport const gallery: GalleryCard[] = ${JSON.stringify(gallery, null, 2)};\n\nexport const catalogStats: { packages: number; needs: number } = ${JSON.stringify(stats)};\n\nexport const featuredPackage: string = ${JSON.stringify(uiPackage)};\n\nexport const featuredPackageVersion: string = ${JSON.stringify(uiVersion)};\n\nexport const featuredPackageChangelogUrl: string = ${JSON.stringify(uiChangelogUrl)};\nexport const featuredPackageReleasesUrl: string = ${JSON.stringify(uiReleasesUrl)};\n\nexport const uiGalleryStats: { components: number; livePreviews: number } = ${JSON.stringify({
     components: gallery.length,
     livePreviews: gallery.filter((card) => card.demo).length,

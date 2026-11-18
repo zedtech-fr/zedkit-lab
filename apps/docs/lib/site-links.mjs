@@ -1,6 +1,6 @@
 /** Shared site URLs for nav, footer, and CI link checks (import from TS and scripts). */
 
-export const SITE_GITHUB_URL = "https://github.com/zedtech-fr/zedkit";
+export const SITE_GITHUB_URL = "https://github.com/zedtech-fr/zedkit-lab";
 
 /** Kit file on GitHub for a docs-manifest `source` path under `packages/ui/src`. */
 export function kitUiSourceUrl(source) {
@@ -8,10 +8,17 @@ export function kitUiSourceUrl(source) {
   return `${SITE_GITHUB_URL}/blob/main/packages/ui/src/${source}`;
 }
 export const SITE_NPM_ORG_URL = "https://www.npmjs.com/org/zedtech";
-export const SITE_LICENSE_URL = "https://github.com/zedtech-fr/zedkit/blob/main/LICENSE";
+export const SITE_LICENSE_URL = "https://github.com/zedtech-fr/zedkit-lab/blob/main/LICENSE";
 export const SITE_BUG_REPORT_URL =
-  "https://github.com/zedtech-fr/zedkit/issues/new?template=bug_report.md";
+  "https://github.com/zedtech-fr/zedkit-lab/issues/new?template=bug_report.md";
 export const SITE_COMPANY_URL = "https://zedtech.fr";
+
+/** Romain's Medium article about this lab. */
+export const SITE_STORY_URL =
+  "https://medium.com/@romain-zt/zedkit-jai-donn%C3%A9-les-cl%C3%A9s-%C3%A0-grokbot-et-gard%C3%A9-mon-t%C3%A9l%C3%A9phone-ce86bfc96636";
+
+/** Build-time env var for the follow-progress form. Unset = link fallback, no collection. */
+export const NEWSLETTER_ENDPOINT_ENV = "NEXT_PUBLIC_NEWSLETTER_ENDPOINT";
 
 /** Demo-only identity editor (not a catalog docs page). */
 export const IDENTITY_EDITOR_HREF = "/features/identity-editor";

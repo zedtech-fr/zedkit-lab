@@ -262,7 +262,7 @@ test("parseLiveRunEnvelope accepts a ticket run and null decision", () => {
         kind: "ticket",
         target_label: "Issue #386",
         branch: "agent/issue-386",
-        opened_pr_url: "https://github.com/zedtech-fr/zedkit/pull/387",
+        opened_pr_url: "https://github.com/zedtech-fr/zedkit-lab/pull/387",
         issue_title: "List steps newest first",
         review_size: null,
         mode: "implement",

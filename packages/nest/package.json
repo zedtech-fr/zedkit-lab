@@ -22,12 +22,12 @@
   ],
   "homepage": "https://zedkit.app",
   "bugs": {
-    "url": "https://github.com/zedtech-fr/zedkit/issues"
+    "url": "https://github.com/zedtech-fr/zedkit-lab/issues"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/zedtech-fr/zedkit",
+    "url": "https://github.com/zedtech-fr/zedkit-lab",
     "directory": "packages/nest"
   },
   "type": "module",

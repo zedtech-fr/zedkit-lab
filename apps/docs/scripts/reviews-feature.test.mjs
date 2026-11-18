@@ -2800,7 +2800,7 @@ test("toAgentConsole marks running items from live status and ignores live_url a
       run: { ...liveSample().run, live_url: "https://example.test/live/abc", review_url: null },
       decision: {
         ...liveSample().decision,
-        review_url: "https://github.com/zedtech-fr/zedkit/pull/1",
+        review_url: "https://github.com/zedtech-fr/zedkit-lab/pull/1",
       },
       items: [
         liveItem({ status: "starting" }),
@@ -2813,8 +2813,8 @@ test("toAgentConsole marks running items from live status and ignores live_url a
     mapped.items.map((item) => item.running),
     [true, true, false],
   );
-  assert.equal(mapped.run.postedReviewHref, "https://github.com/zedtech-fr/zedkit/pull/1");
-  assert.equal(mapped.decision?.postedReviewHref, "https://github.com/zedtech-fr/zedkit/pull/1");
+  assert.equal(mapped.run.postedReviewHref, "https://github.com/zedtech-fr/zedkit-lab/pull/1");
+  assert.equal(mapped.decision?.postedReviewHref, "https://github.com/zedtech-fr/zedkit-lab/pull/1");
 });
 
 test("toAgentConsole maps engine labels, stream labels, and the run running flag", () => {

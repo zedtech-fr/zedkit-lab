@@ -22,7 +22,7 @@ function childEnv(mock, overrides = {}) {
     PATH: `${join(mock, "..")}:${process.env.PATH ?? ""}`,
     GH_BIN: mock,
     GITHUB_SHA: sha,
-    GITHUB_REPOSITORY: "zedtech-fr/zedkit",
+    GITHUB_REPOSITORY: "zedtech-fr/zedkit-lab",
     GH_TOKEN: "test-token",
     REQUIRE_CI_POLL_SECONDS: "0",
     REQUIRE_CI_TIMEOUT_SECONDS: "0",
@@ -66,7 +66,7 @@ const successList = JSON.stringify([
     headSha: sha,
     createdAt: "2026-11-05T10:39:53Z",
     workflowName: "ci",
-    url: "https://github.com/zedtech-fr/zedkit/actions/runs/11",
+    url: "https://github.com/zedtech-fr/zedkit-lab/actions/runs/11",
   },
 ]);
 
@@ -96,7 +96,7 @@ test("fails closed without a token", () => {
           PATH: process.env.PATH ?? "/usr/bin",
           HOME: process.env.HOME ?? dir,
           GITHUB_SHA: sha,
-          GITHUB_REPOSITORY: "zedtech-fr/zedkit",
+          GITHUB_REPOSITORY: "zedtech-fr/zedkit-lab",
           GH_BIN: mock,
           REQUIRE_CI_POLL_SECONDS: "0",
           REQUIRE_CI_TIMEOUT_SECONDS: "0",
@@ -137,7 +137,7 @@ test("fails immediately when ci already completed red", () => {
       headSha: sha,
       createdAt: "2026-11-05T10:39:53Z",
       workflowName: "ci",
-      url: "https://github.com/zedtech-fr/zedkit/actions/runs/42012582044",
+      url: "https://github.com/zedtech-fr/zedkit-lab/actions/runs/42012582044",
     },
   ]);
   const err = throws(
@@ -182,7 +182,7 @@ test("waits through an in-flight run then accepts success", () => {
       headSha: sha,
       createdAt: "2026-11-05T10:39:53Z",
       workflowName: "ci",
-      url: "https://github.com/zedtech-fr/zedkit/actions/runs/12",
+      url: "https://github.com/zedtech-fr/zedkit-lab/actions/runs/12",
     },
   ]);
   const mock = writeMock(

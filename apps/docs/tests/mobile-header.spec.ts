@@ -195,7 +195,7 @@ for (const path of PAGES) {
       await expect(dialog.getByRole("link", { name: "Issues", exact: true })).toHaveAttribute("href", "/issues");
       await expect(dialog.getByRole("link", { name: "GitHub (opens in a new tab)", exact: true })).toHaveAttribute(
         "href",
-        "https://github.com/zedtech-fr/zedkit",
+        "https://github.com/zedtech-fr/zedkit-lab",
       );
       for (const control of await dialog.locator("a, button").filter({ visible: true }).all()) {
         const box = await control.boundingBox();
