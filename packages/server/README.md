@@ -1,4 +1,4 @@
-> **Not for production use — lab/experimental; copy/paste the code freely.**
+> **Take what you need from the source. Don't ship these packages to production.**
 >
 > [Read the story behind zedkit](https://medium.com/p/ce86bfc96636).
 

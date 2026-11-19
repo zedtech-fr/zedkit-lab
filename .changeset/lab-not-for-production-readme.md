@@ -17,4 +17,4 @@
 "@zedtech/zedkit-ui": patch
 ---
 
-Add a clear "Not for production use — lab/experimental; copy/paste the code freely" notice at the top of every published package README (and the repo root / getting-started docs). No API change.
+Rewrite the lab notice at the top of every published package README (and the repo root / getting-started docs) in reader-first voice: "Take what you need from the source. Don't ship these packages to production." No API change.
