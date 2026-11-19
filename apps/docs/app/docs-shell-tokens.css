@@ -414,7 +414,13 @@ html[data-docs-shell] {
   border-top: var(--zk-border-width, 1px) solid hsl(var(--border));
 }
 
-[data-home-six-sentences-card="featured"] {
+/*
+ * Selector must beat `:root[data-identity="glass"] :where(.bg-card)`
+ * (0,2,0). Surface's default variant ships `bg-card`, and glass identity
+ * otherwise paints a 54% white frost + sheen — white title on a pale
+ * panel. Keep this unscoped so the welcome popup can reuse the card.
+ */
+:root [data-slot="surface"][data-home-six-sentences-card="featured"] {
   --foreground: var(--primary-foreground);
   --muted-foreground: var(--primary-foreground);
   position: relative;
