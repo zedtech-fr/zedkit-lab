@@ -38,8 +38,8 @@ export const CLIP_EXCEPTIONS = [
   },
   {
     selector: '[data-home-six-sentences-card="featured"]',
-    file: "apps/docs/app/(home)/_home/sections/home-six-sentences-section.tsx",
-    reason: "Featured quote cards mask the circle/stripe wash.",
+    file: "apps/docs/components/site-chrome/featured-home-surface.tsx",
+    reason: "Featured quote cards (home and welcome popup) mask the circle/stripe wash.",
     owner: "docs",
     removeBy: "2027-02-13",
   },

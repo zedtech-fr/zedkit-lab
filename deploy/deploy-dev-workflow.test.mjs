@@ -39,7 +39,10 @@ test("staging docs builds set the runs API base; production stays ingest-free", 
   assert.doesNotMatch(prod, /ingest-public-reviews/);
   assert.doesNotMatch(prod, /copy-public-reviews-snapshot/);
   assert.doesNotMatch(prod, /PUBLIC_REVIEWS_SNAPSHOT/);
-  assert.doesNotMatch(prod, /NEXT_PUBLIC_ZEDOS_RUNS_API_BASE/);
+  // #450 lets prod bake public /issues runs from a repo variable; it must
+  // not hardcode the staging origin.
+  assert.match(prod, /NEXT_PUBLIC_ZEDOS_RUNS_API_BASE: \$\{\{ vars\.NEXT_PUBLIC_ZEDOS_RUNS_API_BASE \}\}/);
+  assert.doesNotMatch(prod, /NEXT_PUBLIC_ZEDOS_RUNS_API_BASE: https:\/\/dev\.zedkit\.app/);
   assert.match(sources, /NEXT_PUBLIC_ZEDOS_RUNS_API_BASE/);
   assert.match(sources, /deploy-epic-preview/);
   assert.match(sources, /Production `deploy-docs.yml` is/);

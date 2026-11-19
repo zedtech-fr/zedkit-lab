@@ -320,8 +320,8 @@ html[data-docs-shell] {
 
 #home-page #manifesto[data-slot="section"]::before,
 #home-page #manifesto[data-slot="section"]::after,
-#home-page [data-home-six-sentences-card="featured"]::before,
-#home-page [data-home-six-sentences-card="featured"]::after {
+[data-home-six-sentences-card="featured"]::before,
+[data-home-six-sentences-card="featured"]::after {
   content: "";
   position: absolute;
   pointer-events: none;
@@ -346,7 +346,7 @@ html[data-docs-shell] {
 }
 
 #home-page #manifesto[data-slot="section"] > *,
-#home-page [data-home-six-sentences-card="featured"] > * {
+[data-home-six-sentences-card="featured"] > * {
   position: relative;
   z-index: 1;
 }
@@ -388,12 +388,12 @@ html[data-docs-shell] {
  * Snapshot ink so the nested glass reply can restore readable type.
  * Blobs are tokenised primary-foreground, not mockup hex.
  */
-#home-page [data-home-six-sentences] {
+[data-home-six-sentences] {
   --home-six-sentences-ink: var(--foreground);
   --home-six-sentences-muted: var(--muted-foreground);
 }
 
-#home-page [data-home-six-sentences-quote] {
+[data-home-six-sentences-quote] {
   margin: 0;
   font-style: italic;
 }
@@ -414,7 +414,7 @@ html[data-docs-shell] {
   border-top: var(--zk-border-width, 1px) solid hsl(var(--border));
 }
 
-#home-page [data-home-six-sentences-card="featured"] {
+[data-home-six-sentences-card="featured"] {
   --foreground: var(--primary-foreground);
   --muted-foreground: var(--primary-foreground);
   position: relative;
@@ -425,7 +425,7 @@ html[data-docs-shell] {
   color: hsl(var(--primary-foreground));
 }
 
-#home-page [data-home-six-sentences-card="featured"]::before {
+[data-home-six-sentences-card="featured"]::before {
   top: -4.5rem;
   right: -4rem;
   width: 15rem;
@@ -434,7 +434,7 @@ html[data-docs-shell] {
   background-color: hsl(var(--primary-foreground) / 0.1);
 }
 
-#home-page [data-home-six-sentences-card="featured"]::after {
+[data-home-six-sentences-card="featured"]::after {
   top: -40%;
   right: 22%;
   width: 5.5rem;
@@ -443,12 +443,12 @@ html[data-docs-shell] {
   background-color: hsl(var(--primary-foreground) / 0.08);
 }
 
-#home-page [data-home-six-sentences-card="featured"] [data-slot="badge"] {
+[data-home-six-sentences-card="featured"] [data-slot="badge"] {
   background-color: hsl(var(--primary-foreground));
   color: hsl(var(--primary));
 }
 
-#home-page [data-home-six-sentences-card="featured"] [data-home-six-sentences-reply] {
+[data-home-six-sentences-card="featured"] [data-home-six-sentences-reply] {
   --foreground: var(--home-six-sentences-ink);
   --muted-foreground: var(--home-six-sentences-muted);
   align-self: start;
@@ -459,8 +459,8 @@ html[data-docs-shell] {
 @media (prefers-reduced-transparency: reduce) {
   #home-page #manifesto[data-slot="section"]::before,
   #home-page #manifesto[data-slot="section"]::after,
-  #home-page [data-home-six-sentences-card="featured"]::before,
-  #home-page [data-home-six-sentences-card="featured"]::after {
+  [data-home-six-sentences-card="featured"]::before,
+  [data-home-six-sentences-card="featured"]::after {
     background-color: hsl(var(--primary-foreground) / 0.06);
   }
 }

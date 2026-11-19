@@ -15,7 +15,7 @@ export const SITE_COMPANY_URL = "https://zedtech.fr";
 
 /** Public Medium article about this lab. */
 export const SITE_STORY_URL =
-  "https://medium.com/@romain-zt/zedkit-jai-donn%C3%A9-les-cl%C3%A9s-%C3%A0-grokbot-et-gard%C3%A9-mon-t%C3%A9l%C3%A9phone-ce86bfc96636";
+  "https://medium.com/p/ce86bfc96636";
 
 /** Build-time env var for the follow-progress form. Unset = link fallback, no collection. */
 export const NEWSLETTER_ENDPOINT_ENV = "NEXT_PUBLIC_NEWSLETTER_ENDPOINT";

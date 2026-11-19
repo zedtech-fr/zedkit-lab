@@ -2,20 +2,20 @@
 
 import { useCallback, useEffect, useState } from "react";
 import {
+  Badge,
   Button,
   Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
-  DialogHeader,
   DialogTitle,
   Heading,
   Stack,
-  StatusDot,
   Text,
   WidgetButton,
 } from "@zedtech/zedkit-ui";
 
+import { FeaturedHomeReply, FeaturedHomeSurface } from "@/components/site-chrome/featured-home-surface";
 import { FollowProgressForm } from "@/components/site-chrome/follow-progress-form";
 import { welcomePopupCopy } from "@/components/site-chrome/i18n/welcome-popup-copy";
 import { OffPathLink } from "@/components/site-chrome/off-path-link";
@@ -35,11 +35,12 @@ import {
  * Customers:        Developers reading the docs on a laptop or a phone.
  * Customer personas: Hurried scanner (skims, dismisses, reopens through a pill) and interested reader (leaves
  *                   a name on the first visit); both burned by hype and drip campaigns; both often on phones.
- * UI decisions:     One translucent violet glass panel — the Dialog surface itself — because a second card
- *                   or the default solid chrome (border, bg-card) reads as a white ring and a messy
- *                   white–violet–white stack. Title, notice, and the capture form share that one surface.
- *                   Inverted kit buttons keep contrast on the violet. Minimized WidgetButton pill sits
- *                   just above the identity dock, in the dock family.
+ * UI decisions:     Reuse the home Quality/Consistency featured card chrome (FeaturedHomeSurface +
+ *                   FeaturedHomeReply, same data attributes and tokens): deep primary panel, italic
+ *                   title, a Lab pill, white notice and story link, and the capture form inside the
+ *                   light glass reply. Dialog chrome stays transparent so it cannot paint a white rim.
+ *                   Primary submit and ghost minimize sit on the inner card. The reopen pill uses the
+ *                   same primary ink. Minimized WidgetButton sits just above the identity dock.
  *
  * Delayed welcome popup: lab notice + follow-progress capture. Mounted once
  * from the root layout so it can appear on any landing route (home, docs,
@@ -104,10 +105,9 @@ function WelcomePill({ onReopen }: { onReopen: () => void }) {
         aria-haspopup="dialog"
         onClick={onReopen}
         data-welcome-pill=""
-        data-surface="glass"
         className="pointer-events-auto"
       >
-        <StatusDot tone="active" pulse={false} />
+        <Badge>{welcomePopupCopy.badge}</Badge>
         <Text typeRole="label" className="truncate">
           {welcomePopupCopy.pill.label}
         </Text>
@@ -125,41 +125,54 @@ export function WelcomePopup() {
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent
-          className="sm:max-w-reading overflow-hidden border-0 bg-transparent p-0 shadow-none rounded-2xl"
+          className="overflow-hidden rounded-xl border-0 bg-transparent shadow-none sm:max-w-reading"
           closeLabel={welcomePopupCopy.close}
           data-welcome-popup=""
         >
-          <Stack gap="md" data-welcome-stage="">
-            <DialogHeader>
-              <DialogTitle asChild>
-                <Heading level={2} typeRole="title">
-                  {welcomePopupCopy.headline}
-                </Heading>
-              </DialogTitle>
-              <DialogDescription asChild>
-                <Text typeRole="body">{welcomePopupCopy.notice}</Text>
-              </DialogDescription>
-            </DialogHeader>
-            <OffPathLink href={SITE_STORY_URL} className="w-fit link-offset hover:underline">
-              {welcomePopupCopy.story}
-            </OffPathLink>
-            <Stack gap="sm" data-welcome-capture="">
-              <Stack gap="tight">
-                <Text typeRole="label">{welcomePopupCopy.capture.title}</Text>
-                <Text typeRole="body">{welcomePopupCopy.capture.description}</Text>
+          <div data-welcome-stage="" data-home-six-sentences="">
+            <FeaturedHomeSurface>
+              <Stack gap="lg" className="h-full justify-between">
+                <Stack gap="sm">
+                  <Badge>{welcomePopupCopy.badge}</Badge>
+                  <blockquote data-home-six-sentences-quote="">
+                    <DialogTitle asChild>
+                      <Heading as="div" level={2} typeRole="title" className="text-balance">
+                        {welcomePopupCopy.headline}
+                      </Heading>
+                    </DialogTitle>
+                  </blockquote>
+                  <DialogDescription asChild>
+                    <Text typeRole="body">{welcomePopupCopy.notice}</Text>
+                  </DialogDescription>
+                  <OffPathLink
+                    href={SITE_STORY_URL}
+                    data-welcome-story=""
+                    className="w-fit link-offset hover:underline"
+                  >
+                    {welcomePopupCopy.story}
+                  </OffPathLink>
+                </Stack>
+                <FeaturedHomeReply>
+                  <Stack gap="sm" data-welcome-capture="">
+                    <Stack gap="tight">
+                      <Text typeRole="label">{welcomePopupCopy.capture.title}</Text>
+                      <Text typeRole="body">{welcomePopupCopy.capture.description}</Text>
+                    </Stack>
+                    <FollowProgressForm
+                      renderActions={(submit) => (
+                        <DialogFooter>
+                          <Button type="button" variant="ghost" onClick={minimize}>
+                            {welcomePopupCopy.minimize}
+                          </Button>
+                          {submit}
+                        </DialogFooter>
+                      )}
+                    />
+                  </Stack>
+                </FeaturedHomeReply>
               </Stack>
-              <FollowProgressForm
-                renderActions={(submit) => (
-                  <DialogFooter>
-                    <Button type="button" variant="outline" onClick={minimize}>
-                      {welcomePopupCopy.minimize}
-                    </Button>
-                    {submit}
-                  </DialogFooter>
-                )}
-              />
-            </Stack>
-          </Stack>
+            </FeaturedHomeSurface>
+          </div>
         </DialogContent>
       </Dialog>
       {minimized && !open ? <WelcomePill onReopen={() => setOpen(true)} /> : null}
