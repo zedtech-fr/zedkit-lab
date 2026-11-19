@@ -578,22 +578,26 @@ jobs:
       - name: pnpm install (store + nm archive)
         if: runner.environment == 'self-hosted'
         run: bash scripts/ci-runner-cache.sh install
+      # SHA-exact only. restore-keys used to reuse a previous SHA (and, after
+      # the repo rename, caches baked with absolute paths under
+      # /home/runner/work/zedkit/zedkit/), which makes Turbopack fail with
+      # "webpack loader path ... is outside configured roots" and
+      # "Module not found" for generated MDX under apps/docs/.source.
       - uses: actions/cache@v6
         if: runner.environment != 'self-hosted'
         with:
           path: |
-            .turbo
             apps/docs/.next/cache
-          key: turbo-docs-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
-          restore-keys: |
-            turbo-docs-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-
+          key: docs-next-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
       - name: Build docs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          extra=()
-          if [ "${RUNNER_ENVIRONMENT}" = "self-hosted" ]; then
-            extra+=(--cache-dir=/runner-cache/turbo)
-          fi
-          pnpm exec turbo run build --filter=@zedtech/zedkit-docs "${extra[@]}"
+          # Same command as deploy-dev / deploy-docs: pnpm runs prebuild
+          # (docs:generate, fumadocs-mdx, registry, dependency builds) then
+          # next build. `turbo run build` skips the npm prebuild lifecycle,
+          # so a missed postinstall left .source/content imports unresolved.
+          pnpm --filter @zedtech/zedkit-docs build
       - name: Docs static export SEO check
         run: node apps/docs/scripts/check-seo-export.mjs
       - name: Docs home first-load JS budget

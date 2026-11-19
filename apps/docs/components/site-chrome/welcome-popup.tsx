@@ -125,7 +125,7 @@ export function WelcomePopup() {
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent
-          className="sm:max-w-reading overflow-hidden border-0 bg-transparent p-0 shadow-none rounded-2xl"
+          className="overflow-hidden rounded-2xl border-0 bg-transparent shadow-none sm:max-w-reading"
           closeLabel={welcomePopupCopy.close}
           data-welcome-popup=""
         >
