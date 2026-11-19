@@ -75,6 +75,10 @@ test("root layout mounts the welcome popup once, ahead of Provider, so every rou
   assert.match(signature, /\[data-welcome-pill-host\]/);
   assert.match(signature, /padding-bottom: max\(0\.75rem, env\(safe-area-inset-bottom\)\);/);
   assert.match(signature, /\[data-slot="dialog-content"\]\[data-welcome-popup\]/);
+  assert.match(
+    signature,
+    /\[data-slot="dialog-content"\]\[data-welcome-popup\] \{[\s\S]*--spacing-dialog-max-height:\s*100dvh/,
+  );
   assert.match(signature, /border: 0;/);
   assert.match(signature, /overflow: hidden;/);
   assert.match(signature, /padding: 0;/);
