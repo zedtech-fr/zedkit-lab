@@ -22,6 +22,21 @@ zedkit.app {
 	root * /srv/site
 	encode zstd gzip
 
+	handle /api/signup* {
+		request_body {
+			max_size 8KB
+		}
+		reverse_proxy https://dev.zedkit.app {
+			header_up Host dev.zedkit.app
+			header_up X-Signup-Env prod
+			header_up X-Real-IP {remote_host}
+			transport http {
+				read_timeout 10s
+				write_timeout 10s
+			}
+		}
+	}
+
 	handle /api/identity/suggest* {
 		request_body {
 			max_size 32KB

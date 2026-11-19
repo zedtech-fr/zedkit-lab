@@ -43,6 +43,7 @@ jobs:
       - name: Build docs
         env:
           NEXT_PUBLIC_ZEDOS_RUNS_API_BASE: ${{ vars.NEXT_PUBLIC_ZEDOS_RUNS_API_BASE }}
+          NEXT_PUBLIC_NEWSLETTER_ENDPOINT: https://zedkit.app/api/signup
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm --filter @zedtech/zedkit-docs build
       - name: Write suggest env

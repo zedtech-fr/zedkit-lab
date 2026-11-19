@@ -52,6 +52,7 @@ jobs:
       - name: Build docs
         env:
           NEXT_PUBLIC_ZEDOS_RUNS_API_BASE: https://dev.zedkit.app
+          NEXT_PUBLIC_NEWSLETTER_ENDPOINT: https://dev.zedkit.app/api/signup
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm --filter @zedtech/zedkit-docs build
       - name: Publish static export
