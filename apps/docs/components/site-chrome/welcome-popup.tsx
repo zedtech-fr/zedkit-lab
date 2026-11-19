@@ -130,8 +130,8 @@ export function WelcomePopup() {
           data-welcome-popup=""
         >
           <div data-welcome-stage="" data-home-six-sentences="">
-            <FeaturedHomeSurface>
-              <Stack gap="lg" className="h-full justify-between">
+            <FeaturedHomeSurface className="h-auto">
+              <Stack gap="lg">
                 <Stack gap="sm">
                   <Badge>{welcomePopupCopy.badge}</Badge>
                   <blockquote data-home-six-sentences-quote="">
