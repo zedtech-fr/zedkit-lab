@@ -219,6 +219,21 @@
   overscroll-behavior: contain;
 }
 
+/*
+ * The featured surface defaults to h-full (home grid). In the dialog that
+ * squashes the reply, and DialogFooter's sticky pin-bottom then sits on
+ * the email field at 375x667. Let the panel grow and the stage scroll.
+ */
+[data-welcome-popup] [data-home-six-sentences-card="featured"] {
+  height: auto;
+}
+
+[data-welcome-popup] [data-slot="dialog-footer"] {
+  position: static;
+  z-index: auto;
+  padding-bottom: 0;
+}
+
 [data-welcome-popup] [data-home-six-sentences-quote] {
   text-wrap: balance;
 }

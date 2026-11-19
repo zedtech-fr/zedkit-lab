@@ -83,6 +83,16 @@ test("root layout mounts the welcome popup once, ahead of Provider, so every rou
   assert.match(signature, /env\(safe-area-inset-bottom\)/);
   assert.match(signature, /\[data-welcome-story\]/);
   assert.match(signature, /\[data-welcome-pill\]/);
+  assert.match(popup, /FeaturedHomeSurface className="h-auto"/);
+  assert.doesNotMatch(popup, /h-full justify-between/);
+  assert.match(
+    signature,
+    /\[data-welcome-popup\] \[data-home-six-sentences-card="featured"\] \{[^}]*height:\s*auto/,
+  );
+  assert.match(
+    signature,
+    /\[data-welcome-popup\] \[data-slot="dialog-footer"\] \{[^}]*position:\s*static/,
+  );
   assert.doesNotMatch(signature, /\[data-slot="dialog-content"\]\[data-welcome-popup\][^{]*\{[^}]*backdrop-filter: var\(--zk-glass-overlay-filter\)/);
   assert.match(popup, /minimized && !open/);
   assert.match(popup, /welcomePopupCopy\.pill\.reopen/);
