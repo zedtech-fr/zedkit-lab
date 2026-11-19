@@ -88,6 +88,10 @@ test("root layout mounts the welcome popup once, ahead of Provider, so every rou
     /:root button\[data-welcome-pill\] \{[^}]*background-color:\s*hsl\(var\(--primary\)\)/,
   );
   assert.match(signature, /@media \(height < 45rem\)/);
+  assert.match(
+    signature,
+    /@media \(height < 45rem\) \{[\s\S]*max-height:\s*calc\(100dvh/,
+  );
   assert.match(popup, /FeaturedHomeSurface className="h-auto"/);
   assert.doesNotMatch(popup, /h-full justify-between/);
   assert.match(

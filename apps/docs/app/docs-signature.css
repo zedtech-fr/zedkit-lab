@@ -272,8 +272,12 @@
   color: hsl(var(--primary));
 }
 
-/* 375x667: tighten vertical rhythm so Keep browsing stays on-screen. */
+/* 375x667: tighten vertical rhythm and give the dialog almost the
+   full viewport so Keep browsing stays on-screen, not in overflow. */
 @media (height < 45rem) {
+  [data-slot="dialog-content"][data-welcome-popup] {
+    max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 0.75rem);
+  }
   [data-welcome-popup] [data-home-six-sentences-card="featured"] {
     padding-block: calc(var(--spacing) * 3);
   }
