@@ -37,12 +37,26 @@ test("root layout mounts the welcome popup once, ahead of Provider, so every rou
   assert.match(popup, /data-welcome-popup=/);
   assert.match(popup, /data-welcome-stage=/);
   assert.match(popup, /data-welcome-capture=/);
-  assert.match(popup, /typeRole="title"/);
+  assert.match(popup, /typeRole="heading"/);
+  assert.match(popup, /direction="horizontal"/);
+  assert.match(popup, /pr-dialog-header-end/);
   assert.match(popup, /border-0/);
   assert.match(popup, /bg-transparent/);
   assert.match(popup, /overflow-hidden/);
-  assert.match(popup, /rounded-2xl/);
-  assert.doesNotMatch(popup, /variant="glass"/);
+  assert.match(popup, /rounded-xl/);
+  assert.match(popup, /FeaturedHomeSurface/);
+  assert.match(popup, /FeaturedHomeReply/);
+  assert.match(popup, /data-home-six-sentences=/);
+  assert.match(popup, /text-balance/);
+  assert.match(popup, /data-welcome-story=/);
+  assert.match(popup, /variant="ghost"/);
+  assert.match(popup, /welcomePopupCopy\.badge/);
+  const featured = read("components/site-chrome/featured-home-surface.tsx");
+  assert.match(featured, /data-home-six-sentences-card="featured"/);
+  assert.match(featured, /variant="glass"/);
+  assert.match(featured, /padding="card"/);
+  assert.match(featured, /padding="md"/);
+  assert.match(featured, /radius="xl"/);
   assert.match(popup, /WELCOME_POPUP_DELAY_MS/);
   assert.match(popup, /readWelcomePopupState/);
   assert.match(popup, /writeWelcomePopupMinimized/);
@@ -63,15 +77,53 @@ test("root layout mounts the welcome popup once, ahead of Provider, so every rou
   assert.match(signature, /\[data-welcome-pill-host\]/);
   assert.match(signature, /padding-bottom: max\(0\.75rem, env\(safe-area-inset-bottom\)\);/);
   assert.match(signature, /\[data-slot="dialog-content"\]\[data-welcome-popup\]/);
+  assert.match(
+    signature,
+    /\[data-slot="dialog-content"\]\[data-welcome-popup\] \{[\s\S]*--spacing-dialog-max-height:\s*100dvh/,
+  );
   assert.match(signature, /border: 0;/);
   assert.match(signature, /overflow: hidden;/);
-  assert.match(signature, /border-radius: var\(--radius-2xl, 1rem\);/);
-  assert.match(signature, /backdrop-filter: var\(--zk-glass-overlay-filter\);/);
+  assert.match(signature, /padding: 0;/);
+  assert.match(signature, /background-color: transparent;/);
+  assert.match(signature, /border-radius: var\(--radius-xl\);/);
+  assert.match(signature, /env\(safe-area-inset-bottom\)/);
+  assert.match(signature, /\[data-welcome-story\]/);
+  assert.match(signature, /\[data-welcome-pill\]/);
+  assert.match(
+    signature,
+    /:root button\[data-welcome-pill\] \{[^}]*background-color:\s*hsl\(var\(--primary\)\)/,
+  );
+  assert.match(signature, /@media \(height < 45rem\)/);
+  assert.match(
+    signature,
+    /@media \(height < 45rem\) \{[\s\S]*max-height:\s*calc\(100dvh/,
+  );
+  assert.match(popup, /FeaturedHomeSurface className="h-auto"/);
+  assert.doesNotMatch(popup, /h-full justify-between/);
+  assert.match(
+    signature,
+    /\[data-welcome-popup\] \[data-home-six-sentences-card="featured"\] \{[^}]*height:\s*auto/,
+  );
+  assert.match(
+    signature,
+    /\[data-welcome-popup\] \[data-home-six-sentences-reply\] \{[^}]*align-self:\s*stretch/,
+  );
+  assert.match(
+    signature,
+    /\[data-welcome-popup\] \[data-home-six-sentences-reply\] \{[^}]*max-width:\s*none/,
+  );
+  assert.match(
+    signature,
+    /\[data-welcome-popup\] \[data-slot="dialog-footer"\] \{[^}]*position:\s*static/,
+  );
+  assert.doesNotMatch(signature, /\[data-slot="dialog-content"\]\[data-welcome-popup\][^{]*\{[^}]*backdrop-filter: var\(--zk-glass-overlay-filter\)/);
   assert.match(popup, /minimized && !open/);
   assert.match(popup, /welcomePopupCopy\.pill\.reopen/);
   assert.match(popup, /aria-haspopup="dialog"/);
   assert.match(form, /NEXT_PUBLIC_NEWSLETTER_ENDPOINT|NEWSLETTER_ENDPOINT_ENV/);
   assert.match(form, /data-follow-progress="form"/);
+  assert.match(form, /data-follow-progress="success"/);
+  assert.match(form, /form.copy.success/);
   assert.match(form, /data-follow-progress="unwired"/);
   assert.doesNotMatch(form, /data-follow-progress="fallback"/);
   assert.doesNotMatch(form, /endpoint === null\) return/);
@@ -94,6 +146,9 @@ test("root layout mounts the welcome popup once, ahead of Provider, so every rou
   assert.match(copy, /invalidFirstname/);
   assert.match(copy, /invalidEmail/);
   assert.match(copy, /unwired/);
+  assert.match(copy, /badge: "Lab"/);
+  assert.match(copy, /Take the useful bits. Don't ship the packages./);
+  assert.match(copy, /Don.t ship the @zedtech\/zedkit-\* npm packages to production/);
   assert.match(copy, /nothing was sent/);
   assert.doesNotMatch(popup, /mailto:/);
   assert.doesNotMatch(form, /mailto:/);
@@ -156,7 +211,7 @@ test("story and github URLs point at the article and zedkit-lab", () => {
     /export const SITE_GITHUB_URL = "https:\/\/github.com\/zedtech-fr\/zedkit-lab"/,
   );
   assert.match(links, /export const SITE_STORY_URL =/);
-  assert.match(links, /medium.com\/@romain-zt\/zedkit-jai-donn/);
+  assert.match(links, /medium.com\/p\/ce86bfc96636/);
   assert.match(links, /NEWSLETTER_ENDPOINT_ENV = "NEXT_PUBLIC_NEWSLETTER_ENDPOINT"/);
   const hrefs = read("features/reviews/model/github-hrefs.ts");
   assert.match(hrefs, /export const GITHUB_REPO = "zedtech-fr\/zedkit-lab"/);

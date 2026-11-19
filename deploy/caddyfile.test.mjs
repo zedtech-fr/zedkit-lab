@@ -173,3 +173,22 @@ test("the suggest routes cap the request body and every connection has seconds t
   assert.equal([...text.matchAll(/"read_timeout":240000000000/g)].length, 2, "suggest upstream read timeout stays above the provider budget");
   assert.equal([...text.matchAll(/"flush_interval":-1/g)].length, 2, "suggest proxies flush immediately so status events are not buffered");
 });
+
+test("production proxies follow-progress signups to the Dedibox endpoint; the stale dev block stays off that path", async () => {
+  const { readFileSync } = await import("node:fs");
+  const text = readFileSync(`${here}/Caddyfile`, "utf8");
+  const block = (host) => {
+    const start = text.indexOf(`\n${host} {`);
+    assert.notEqual(start, -1, `${host} block`);
+    const next = text.indexOf("\n}\n", start);
+    return text.slice(start, next);
+  };
+  const prod = block("zedkit.app");
+  const dev = block("dev.zedkit.app");
+  assert.match(prod, /handle \/api\/signup\*/);
+  assert.match(prod, /reverse_proxy https:\/\/dev\.zedkit\.app/);
+  assert.match(prod, /header_up Host dev\.zedkit\.app/);
+  assert.match(prod, /header_up X-Signup-Env prod/);
+  assert.doesNotMatch(dev, /handle \/api\/signup/);
+  assert.doesNotMatch(dev, /X-Signup-Env/);
+});

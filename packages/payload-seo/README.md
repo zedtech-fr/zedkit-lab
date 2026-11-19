@@ -1,9 +1,12 @@
+> **Take what you need from the source. Don't ship these packages to production.**
+>
+> [Read the story behind zedkit](https://medium.com/p/ce86bfc96636).
+
 # @zedtech/zedkit-payload-seo
 
 [![npm version](https://img.shields.io/npm/v/@zedtech/zedkit-payload-seo.svg)](https://www.npmjs.com/package/@zedtech/zedkit-payload-seo)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/zedtech-fr/zedkit-lab/blob/main/LICENSE)
 
-> **Lab experiment:** this package is a workbench, not a shelf product — don't use it in production. Steal the code if it's useful; that's the point. [Read the story behind zedkit](https://medium.com/@romain-zt/zedkit-jai-donn%C3%A9-les-cl%C3%A9s-%C3%A0-grokbot-et-gard%C3%A9-mon-t%C3%A9l%C3%A9phone-ce86bfc96636).
 
 Drop-in localized SEO group field for Payload CMS: meta tags, JSON-LD
 and length validation, ready for i18n sites. Original work by the same

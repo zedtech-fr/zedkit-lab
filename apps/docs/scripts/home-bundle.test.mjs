@@ -308,7 +308,10 @@ test("home below-hero order is same-idea, six-sentences, paste, identities, limi
   assert.match(sixSentences, /<Badge/);
   assert.match(sixSentences, /<blockquote/);
   assert.match(sixSentences, /lg:span-rest/);
-  assert.match(sixSentences, /data-home-six-sentences-card=\{featured \? "featured" : "plain"\}/);
+  assert.match(sixSentences, /FeaturedHomeSurface/);
+  assert.match(sixSentences, /FeaturedHomeReply/);
+  assert.match(sixSentences, /data-home-six-sentences-card="plain"/);
+
   assert.match(sixSentences, /id === "quality" \|\| id === "consistency"/);
   assert.match(sixSentences, /card\.replyBody\(componentCount\)/);
   assert.match(src, /HomeSixSentencesSection componentCount=\{uiGalleryStats\.components\}/);
@@ -386,6 +389,10 @@ test("home below-hero order is same-idea, six-sentences, paste, identities, limi
   assert.doesNotMatch(tokens, /\[data-home-hero-band\]/);
   assert.match(tokens, /\[data-home-six-sentences/);
   assert.match(tokens, /\[data-home-six-sentences-card="featured"\]/);
+  assert.match(
+    tokens,
+    /:root \[data-slot="surface"\]\[data-home-six-sentences-card="featured"\] \{[^}]*background-color:\s*hsl\(var\(--primary\)\)/,
+  );
   assert.match(tokens, /\[data-home-six-sentences-card="plain"\] \[data-home-six-sentences-kit="ai"\]/);
   assert.match(tokens, /\[data-home-six-sentences-card="plain"\] \[data-home-six-sentences-kit="ui"\]/);
   assert.doesNotMatch(tokens, /#1B1764|#2B23C7|#4B3FD9|#3B1F8F|#5B34B5|#7C5CE6/);
@@ -419,11 +426,11 @@ test("home below-hero order is same-idea, six-sentences, paste, identities, limi
   assert.match(tokens, /#home-page #manifesto\[data-slot="section"\]::after/);
   assert.match(
     tokens,
-    /#home-page #manifesto\[data-slot="section"\]::before,\s*#home-page #manifesto\[data-slot="section"\]::after,\s*#home-page \[data-home-six-sentences-card="featured"\]::before,\s*#home-page \[data-home-six-sentences-card="featured"\]::after/,
+    /#home-page #manifesto\[data-slot="section"\]::before,\s*#home-page #manifesto\[data-slot="section"\]::after,\s*\[data-home-six-sentences-card="featured"\]::before,\s*\[data-home-six-sentences-card="featured"\]::after/,
   );
   assert.match(
     tokens,
-    /#home-page #manifesto\[data-slot="section"\] > \*,\s*#home-page \[data-home-six-sentences-card="featured"\] > \*/,
+    /#home-page #manifesto\[data-slot="section"\] > \*,\s*\[data-home-six-sentences-card="featured"\] > \*/,
   );
   const glassReduced = [
     ...tokens.matchAll(/@media \(prefers-reduced-transparency: reduce\) \{[\s\S]*?\n\}/g),

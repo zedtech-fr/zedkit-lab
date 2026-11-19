@@ -189,116 +189,118 @@
 }
 
 /*
- * Welcome popup: one translucent violet glass panel. Styles live on the
- * Dialog surface itself so default solid chrome (border, bg-card, a tighter
- * radius) cannot peek around the gradient as a white ring. No nested card.
- * Do not scope to #home-page — the popup is global.
+ * Welcome popup: the Dialog is a transparent clip frame so default solid
+ * chrome cannot paint a white rim. The visible panel is FeaturedHomeSurface
+ * (same tokens as the home Consistency card). Do not set position on the
+ * dialog — it must stay fixed (dialog-center).
  */
 [data-slot="dialog-content"][data-welcome-popup] {
-  --foreground: var(--primary-foreground);
-  --muted-foreground: var(--primary-foreground);
-  --ring: var(--primary-foreground);
-  /* Do not set position: it must stay fixed (dialog-center). relative
-     un-centers the modal and drops it into document flow. */
-  isolation: isolate;
-  overflow: hidden;
   --zk-glass-highlight: 0 0 0 transparent;
+  overflow: hidden;
   border: 0;
   outline: none;
+  padding: 0;
+  background-color: transparent;
+  background-image: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
   /* Drop shadow only: --zk-shadow-xl includes --zk-glass-highlight, a 1px inset
      white edge that reads as a ring around the modal. */
   box-shadow: 0 28px 64px -18px hsl(var(--zk-shadow-color, 230 30% 20%) / 0.3);
-  border-radius: var(--radius-2xl, 1rem);
-  padding: calc(var(--spacing) * 6);
-  background-color: hsl(var(--primary) / 0.84);
-  background-image: linear-gradient(135deg, hsl(var(--primary) / 0.9) 0%, hsl(var(--accent) / 0.76) 100%);
-  -webkit-backdrop-filter: var(--zk-glass-overlay-filter);
-  backdrop-filter: var(--zk-glass-overlay-filter);
-  color: hsl(var(--primary-foreground));
-}
-
-@media (width >= 40rem) {
-  [data-slot="dialog-content"][data-welcome-popup] {
-    padding: calc(var(--spacing) * 8);
-  }
-}
-
-[data-slot="dialog-content"][data-welcome-popup]::before,
-[data-slot="dialog-content"][data-welcome-popup]::after {
-  content: "";
-  position: absolute;
-  pointer-events: none;
-}
-
-[data-slot="dialog-content"][data-welcome-popup]::before {
-  top: -4.5rem;
-  right: -4rem;
-  width: 15rem;
-  height: 15rem;
-  border-radius: 50%;
-  background-color: hsl(var(--primary-foreground) / 0.1);
-}
-
-[data-slot="dialog-content"][data-welcome-popup]::after {
-  top: -40%;
-  right: 22%;
-  width: 5.5rem;
-  height: 180%;
-  transform: rotate(24deg);
-  background-color: hsl(var(--primary-foreground) / 0.08);
+  border-radius: var(--radius-xl);
+  width: calc(100vw - 2 * var(--zk-page-gutter) - env(safe-area-inset-left) - env(safe-area-inset-right));
+  max-width: min(var(--zk-container-reading), calc(100vw - 2 * var(--zk-page-gutter) - env(safe-area-inset-left) - env(safe-area-inset-right)));
+  max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 2 * var(--zk-page-gutter));
+  /* useDialogViewportFit writes inline max-height as
+     min(var(--spacing-dialog-max-height), visualViewport.height - 16).
+     The token defaults to 90dvh (600px on a 667-tall phone), which clips
+     Keep browsing. Let the JS viewport cap be the only ceiling. */
+  --spacing-dialog-max-height: 100dvh;
 }
 
 [data-welcome-stage] {
-  position: relative;
-  z-index: 1;
+  overflow: auto;
+  max-height: inherit;
+  overscroll-behavior: contain;
 }
 
-[data-welcome-popup] [data-slot="dialog-title"] {
-  font-size: var(--zk-type-h2-size);
-  font-weight: var(--zk-type-h2-weight);
-  line-height: var(--zk-type-h2-leading);
-  letter-spacing: var(--zk-heading-tracking, -0.02em);
+/*
+ * The featured surface defaults to h-full (home grid). In the dialog that
+ * squashes the reply, and DialogFooter's sticky pin-bottom then sits on
+ * the email field at 375x667. Let the panel grow and the stage scroll.
+ */
+[data-welcome-popup] [data-home-six-sentences-card="featured"] {
+  height: auto;
 }
 
-[data-welcome-popup] [data-slot="dialog-description"] {
-  font-size: var(--zk-home-persuasion-font-size, var(--zk-type-body-size));
-  line-height: var(--zk-home-persuasion-leading, var(--zk-type-body-leading));
-  color: hsl(var(--primary-foreground));
+/*
+ * The shared featured rule caps the reply at the narrow container and pins
+ * it start (home grid). In the dialog the reply spans the content column
+ * like the title and notice above it. Popup-scoped: home cards keep theirs.
+ */
+[data-welcome-popup] [data-home-six-sentences-reply] {
+  align-self: stretch;
+  max-width: none;
+}
+
+[data-welcome-popup] [data-slot="dialog-footer"] {
+  position: static;
+  z-index: auto;
+  padding-bottom: 0;
+}
+
+[data-welcome-popup] [data-home-six-sentences-quote] {
+  text-wrap: balance;
+}
+
+/* Icon stays on the same line as the last word of the story link. */
+[data-welcome-popup] [data-welcome-story] {
+  display: inline;
+  color: inherit;
+}
+
+[data-welcome-popup] [data-welcome-story] [data-external-mark] {
+  display: inline;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  margin-inline-start: var(--zk-gap-icon, 0.35em);
 }
 
 [data-welcome-popup] .close-quiet {
   color: hsl(var(--primary-foreground));
 }
 
-[data-welcome-popup] [data-slot="button"][type="submit"] {
+/* Reopen pill: same primary ink as the featured card, not dock glass.
+   Selector must beat :root[data-identity="glass"] :where(.bg-card) (0,2,0). */
+:root button[data-welcome-pill] {
+  background-color: hsl(var(--primary));
+  background-image: none;
+  color: hsl(var(--primary-foreground));
+  border-color: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+:root button[data-welcome-pill] [data-slot="badge"] {
   background-color: hsl(var(--primary-foreground));
   color: hsl(var(--primary));
-  border-color: transparent;
 }
 
-[data-welcome-popup] [data-slot="button"][type="button"] {
-  background-color: hsl(var(--primary-foreground) / 0.12);
-  color: hsl(var(--primary-foreground));
-  border-color: hsl(var(--primary-foreground) / 0.45);
-}
-
-[data-welcome-popup] input {
-  background-color: hsl(var(--primary-foreground) / 0.14);
-  border-color: hsl(var(--primary-foreground) / 0.32);
-  color: hsl(var(--primary-foreground));
-}
-
-@media (prefers-reduced-transparency: reduce) {
+/* 375x667: tighten vertical rhythm and give the dialog almost the
+   full viewport so Keep browsing stays on-screen, not in overflow. */
+@media (height < 45rem) {
   [data-slot="dialog-content"][data-welcome-popup] {
-    background-color: hsl(var(--primary));
-    background-image: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
+    max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 0.75rem);
   }
-
-  [data-slot="dialog-content"][data-welcome-popup]::before,
-  [data-slot="dialog-content"][data-welcome-popup]::after {
-    background-color: hsl(var(--primary-foreground) / 0.06);
+  [data-welcome-popup] [data-home-six-sentences-card="featured"] {
+    padding-block: calc(var(--spacing) * 3);
+  }
+  [data-welcome-popup] [data-home-six-sentences-card="featured"] > * {
+    gap: calc(var(--spacing) * 2);
+  }
+  [data-welcome-popup] [data-home-six-sentences-reply] {
+    padding-block: calc(var(--spacing) * 2);
   }
 }
 
@@ -306,9 +308,6 @@
   [data-slot="dialog-content"][data-welcome-popup] {
     border: var(--zk-border-width, 1px) solid CanvasText;
     background-color: Canvas;
-    background-image: none;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
     color: CanvasText;
   }
 }

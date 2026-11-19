@@ -39,7 +39,10 @@ test("staging docs builds set the runs API base; production stays ingest-free", 
   assert.doesNotMatch(prod, /ingest-public-reviews/);
   assert.doesNotMatch(prod, /copy-public-reviews-snapshot/);
   assert.doesNotMatch(prod, /PUBLIC_REVIEWS_SNAPSHOT/);
-  assert.doesNotMatch(prod, /NEXT_PUBLIC_ZEDOS_RUNS_API_BASE/);
+  // #450 lets prod bake public /issues runs from a repo variable; it must
+  // not hardcode the staging origin.
+  assert.match(prod, /NEXT_PUBLIC_ZEDOS_RUNS_API_BASE: \$\{\{ vars\.NEXT_PUBLIC_ZEDOS_RUNS_API_BASE \}\}/);
+  assert.doesNotMatch(prod, /NEXT_PUBLIC_ZEDOS_RUNS_API_BASE: https:\/\/dev\.zedkit\.app/);
   assert.match(sources, /NEXT_PUBLIC_ZEDOS_RUNS_API_BASE/);
   assert.match(sources, /deploy-epic-preview/);
   assert.match(sources, /Production `deploy-docs.yml` is/);
@@ -100,4 +103,11 @@ test("epic-73 preview deploys to its own dest and concurrency group", () => {
   assert.doesNotMatch(epic, /deploy\/deploy\.sh/);
   assert.doesNotMatch(epic, /docker compose/);
   assert.doesNotMatch(epic, /\/srv\/app/);
+});
+
+test("docs builds bake the follow-progress signup endpoint", () => {
+  assert.match(dev, /NEXT_PUBLIC_NEWSLETTER_ENDPOINT: https:\/\/dev\.zedkit\.app\/api\/signup/);
+  assert.match(prod, /NEXT_PUBLIC_NEWSLETTER_ENDPOINT: https:\/\/zedkit\.app\/api\/signup/);
+  assert.doesNotMatch(dev, /NEXT_PUBLIC_NEWSLETTER_ENDPOINT: https:\/\/zedkit\.app\/api\/signup/);
+  assert.doesNotMatch(prod, /NEXT_PUBLIC_NEWSLETTER_ENDPOINT: https:\/\/dev\.zedkit\.app\/api\/signup/);
 });

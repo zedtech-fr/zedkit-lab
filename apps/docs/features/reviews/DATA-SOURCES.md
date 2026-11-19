@@ -285,5 +285,6 @@ Pinned URLs read `window.location.search` after mount (static export). The first
 `NEXT_PUBLIC_ZEDOS_RUNS_API_BASE=https://dev.zedkit.app` on the docs
 build and may pass `GITHUB_TOKEN` to raise the GitHub rate limit.
 They do not ingest a JSON snapshot. Production `deploy-docs.yml` is
-unchanged: no runs base, no ingest.
+ingest-free and does not hardcode a staging runs base; it may pass through
+`vars.NEXT_PUBLIC_ZEDOS_RUNS_API_BASE` when that repo variable is set.
 

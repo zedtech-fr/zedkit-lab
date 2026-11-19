@@ -183,7 +183,9 @@ test("each home band has one appear or scroll, never on Section", () => {
   assert.match(sameIdea, /<Card className="[^"]*hover-lift/);
   assert.match(six, /hover-lift/);
   // Plain six-sentences cards have no focusables: hover-lift is mouse-only delight.
-  assert.match(six, /data-home-six-sentences-card=\{featured \? "featured" : "plain"\}/);
+  assert.match(six, /FeaturedHomeSurface/);
+  assert.match(six, /data-home-six-sentences-card="plain"/);
+
   assert.doesNotMatch(mist, /hover-lift/);
   assert.doesNotMatch(limits, /hover-lift/);
 });
