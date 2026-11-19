@@ -104,3 +104,10 @@ test("epic-73 preview deploys to its own dest and concurrency group", () => {
   assert.doesNotMatch(epic, /docker compose/);
   assert.doesNotMatch(epic, /\/srv\/app/);
 });
+
+test("docs builds bake the follow-progress signup endpoint", () => {
+  assert.match(dev, /NEXT_PUBLIC_NEWSLETTER_ENDPOINT: https:\/\/dev\.zedkit\.app\/api\/signup/);
+  assert.match(prod, /NEXT_PUBLIC_NEWSLETTER_ENDPOINT: https:\/\/zedkit\.app\/api\/signup/);
+  assert.doesNotMatch(dev, /NEXT_PUBLIC_NEWSLETTER_ENDPOINT: https:\/\/zedkit\.app\/api\/signup/);
+  assert.doesNotMatch(prod, /NEXT_PUBLIC_NEWSLETTER_ENDPOINT: https:\/\/dev\.zedkit\.app\/api\/signup/);
+});
