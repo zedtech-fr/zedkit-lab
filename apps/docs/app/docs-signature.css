@@ -256,16 +256,33 @@
   color: hsl(var(--primary-foreground));
 }
 
-/* Reopen pill: same primary ink as the featured card, not dock glass. */
-[data-welcome-pill] {
+/* Reopen pill: same primary ink as the featured card, not dock glass.
+   Selector must beat :root[data-identity="glass"] :where(.bg-card) (0,2,0). */
+:root button[data-welcome-pill] {
   background-color: hsl(var(--primary));
+  background-image: none;
   color: hsl(var(--primary-foreground));
   border-color: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
-[data-welcome-pill] [data-slot="badge"] {
+:root button[data-welcome-pill] [data-slot="badge"] {
   background-color: hsl(var(--primary-foreground));
   color: hsl(var(--primary));
+}
+
+/* 375x667: tighten vertical rhythm so Keep browsing stays on-screen. */
+@media (height < 45rem) {
+  [data-welcome-popup] [data-home-six-sentences-card="featured"] {
+    padding-block: calc(var(--spacing) * 3);
+  }
+  [data-welcome-popup] [data-home-six-sentences-card="featured"] > * {
+    gap: calc(var(--spacing) * 2);
+  }
+  [data-welcome-popup] [data-home-six-sentences-reply] {
+    padding-block: calc(var(--spacing) * 2);
+  }
 }
 
 @media (forced-colors: active) {
