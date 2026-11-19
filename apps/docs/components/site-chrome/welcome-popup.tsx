@@ -118,6 +118,38 @@ function WelcomePill({ onReopen }: { onReopen: () => void }) {
   );
 }
 
+/**
+ * Badge, title, notice, and story link. Same featured-card stack as the home
+ * Quality/Consistency cards, one type step down for a dialog; the end padding
+ * reserves the kit close control's own lane so the X cannot sit on the badge.
+ */
+function WelcomePopupIntro() {
+  return (
+    <Stack gap="sm" className="pr-dialog-header-end">
+      <Stack direction="horizontal" gap="sm">
+        <Badge>{welcomePopupCopy.badge}</Badge>
+      </Stack>
+      <blockquote data-home-six-sentences-quote="">
+        <DialogTitle asChild>
+          <Heading as="div" typeRole="heading" className="text-balance">
+            {welcomePopupCopy.headline}
+          </Heading>
+        </DialogTitle>
+      </blockquote>
+      <DialogDescription asChild>
+        <Text typeRole="body">{welcomePopupCopy.notice}</Text>
+      </DialogDescription>
+      <OffPathLink
+        href={SITE_STORY_URL}
+        data-welcome-story=""
+        className="w-fit link-offset hover:underline"
+      >
+        {welcomePopupCopy.story}
+      </OffPathLink>
+    </Stack>
+  );
+}
+
 export function WelcomePopup() {
   const { minimize, minimized, onOpenChange, open, setOpen } = useWelcomePopupMode();
 
@@ -132,26 +164,7 @@ export function WelcomePopup() {
           <div data-welcome-stage="" data-home-six-sentences="">
             <FeaturedHomeSurface className="h-auto">
               <Stack gap="lg">
-                <Stack gap="sm">
-                  <Badge>{welcomePopupCopy.badge}</Badge>
-                  <blockquote data-home-six-sentences-quote="">
-                    <DialogTitle asChild>
-                      <Heading as="div" level={2} typeRole="title" className="text-balance">
-                        {welcomePopupCopy.headline}
-                      </Heading>
-                    </DialogTitle>
-                  </blockquote>
-                  <DialogDescription asChild>
-                    <Text typeRole="body">{welcomePopupCopy.notice}</Text>
-                  </DialogDescription>
-                  <OffPathLink
-                    href={SITE_STORY_URL}
-                    data-welcome-story=""
-                    className="w-fit link-offset hover:underline"
-                  >
-                    {welcomePopupCopy.story}
-                  </OffPathLink>
-                </Stack>
+                <WelcomePopupIntro />
                 <FeaturedHomeReply>
                   <Stack gap="sm" data-welcome-capture="">
                     <Stack gap="tight">

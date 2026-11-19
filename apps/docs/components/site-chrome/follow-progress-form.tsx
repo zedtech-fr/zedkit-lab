@@ -129,7 +129,7 @@ function FirstnameField({ value, invalid, errorMessage, disabled, label, placeho
         onChange={(event) => onChange(event.target.value)}
       />
       {invalid ? (
-        <Text id={errorId} role="alert" className="text-dense text-destructive-foreground">
+        <Text id={errorId} role="alert" className="text-dense text-destructive">
           {errorMessage}
         </Text>
       ) : null}
@@ -157,7 +157,7 @@ function EmailField({ value, invalid, errorMessage, disabled, label, placeholder
         onChange={(event) => onChange(event.target.value)}
       />
       {invalid ? (
-        <Text id={errorId} role="alert" className="text-dense text-destructive-foreground">
+        <Text id={errorId} role="alert" className="text-dense text-destructive">
           {errorMessage}
         </Text>
       ) : null}
@@ -190,7 +190,7 @@ function FollowProgressOutcome({
       ) : null}
       {error !== null ? (
         <Stack direction="horizontal" gap="sm" className="flex-wrap items-center">
-          <Text role="alert" className="text-dense text-destructive-foreground">
+          <Text role="alert" className="text-dense text-destructive">
             {error}
           </Text>
           <Button type="button" size="sm" variant="outline" onClick={onRetry}>

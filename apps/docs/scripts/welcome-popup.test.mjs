@@ -37,7 +37,9 @@ test("root layout mounts the welcome popup once, ahead of Provider, so every rou
   assert.match(popup, /data-welcome-popup=/);
   assert.match(popup, /data-welcome-stage=/);
   assert.match(popup, /data-welcome-capture=/);
-  assert.match(popup, /typeRole="title"/);
+  assert.match(popup, /typeRole="heading"/);
+  assert.match(popup, /direction="horizontal"/);
+  assert.match(popup, /pr-dialog-header-end/);
   assert.match(popup, /border-0/);
   assert.match(popup, /bg-transparent/);
   assert.match(popup, /overflow-hidden/);
@@ -101,6 +103,14 @@ test("root layout mounts the welcome popup once, ahead of Provider, so every rou
   assert.match(
     signature,
     /\[data-welcome-popup\] \[data-home-six-sentences-card="featured"\] \{[^}]*height:\s*auto/,
+  );
+  assert.match(
+    signature,
+    /\[data-welcome-popup\] \[data-home-six-sentences-reply\] \{[^}]*align-self:\s*stretch/,
+  );
+  assert.match(
+    signature,
+    /\[data-welcome-popup\] \[data-home-six-sentences-reply\] \{[^}]*max-width:\s*none/,
   );
   assert.match(
     signature,
