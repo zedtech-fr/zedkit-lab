@@ -1,5 +1,12 @@
 # @zedtech/zedkit-seo
 
+## 1.2.1
+
+### Patch Changes
+
+- 13cd5e7: Rewrite the lab notice at the top of every published package README (and the repo root / getting-started docs) in reader-first voice: "Take what you need from the source. Don't ship these packages to production." No API change.
+- c7943a0: Point package `repository` and `bugs` URLs at the zedkit-lab GitHub repo after the rename. No API or runtime change.
+
 ## 1.2.0
 
 ### Minor Changes
