@@ -147,7 +147,7 @@ test("root layout mounts the welcome popup once, ahead of Provider, so every rou
   assert.match(copy, /invalidEmail/);
   assert.match(copy, /unwired/);
   assert.match(copy, /badge: "Lab"/);
-  assert.match(copy, /Welcome to the lab. Mind the sawdust./);
+  assert.match(copy, /Take the useful bits. Don't ship the packages./);
   assert.match(copy, /Don.t ship the @zedtech\/zedkit-\* npm packages to production/);
   assert.match(copy, /nothing was sent/);
   assert.doesNotMatch(popup, /mailto:/);
