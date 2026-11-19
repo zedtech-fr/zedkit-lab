@@ -233,6 +233,16 @@
   height: auto;
 }
 
+/*
+ * The shared featured rule caps the reply at the narrow container and pins
+ * it start (home grid). In the dialog the reply spans the content column
+ * like the title and notice above it. Popup-scoped: home cards keep theirs.
+ */
+[data-welcome-popup] [data-home-six-sentences-reply] {
+  align-self: stretch;
+  max-width: none;
+}
+
 [data-welcome-popup] [data-slot="dialog-footer"] {
   position: static;
   z-index: auto;
