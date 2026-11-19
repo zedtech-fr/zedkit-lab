@@ -1,4 +1,4 @@
-> **This is a lab, not a store shelf.** The `@zedtech/zedkit-*` npm packages are my workbench — don't ship them to production. Copy, paste, or steal anything useful; that's what the code is for.
+> **Not for production use — lab/experimental; copy/paste the code freely.**
 >
 > [Read the story behind zedkit](https://medium.com/p/ce86bfc96636) · [Watch this repo for updates](https://github.com/zedtech-fr/zedkit-lab)
 

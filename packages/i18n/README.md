@@ -1,6 +1,9 @@
+> **Not for production use — lab/experimental; copy/paste the code freely.**
+>
+> [Read the story behind zedkit](https://medium.com/p/ce86bfc96636).
+
 # @zedtech/zedkit-i18n
 
-> **Lab experiment:** this package is a workbench, not a shelf product — don't use it in production. Steal the code if it's useful; that's the point. [Read the story behind zedkit](https://medium.com/p/ce86bfc96636).
 
 Typed message catalogs and a React provider factory shared with
 `@zedtech/zedkit-ui`. Original work by the same author.

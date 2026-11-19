@@ -1,6 +1,9 @@
+> **Not for production use — lab/experimental; copy/paste the code freely.**
+>
+> [Read the story behind zedkit](https://medium.com/p/ce86bfc96636).
+
 # @zedtech/zedkit-observability
 
-> **Lab experiment:** this package is a workbench, not a shelf product — don't use it in production. Steal the code if it's useful; that's the point. [Read the story behind zedkit](https://medium.com/p/ce86bfc96636).
 
 Logger and product-analytics **ports** with console, noop, and in-memory
 adapters. React apps mount `ObservabilityProvider` and read

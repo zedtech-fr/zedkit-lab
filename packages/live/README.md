@@ -1,6 +1,9 @@
+> **Not for production use — lab/experimental; copy/paste the code freely.**
+>
+> [Read the story behind zedkit](https://medium.com/p/ce86bfc96636).
+
 # @zedtech/zedkit-live
 
-> **Lab experiment:** this package is a workbench, not a shelf product — don't use it in production. Steal the code if it's useful; that's the point. [Read the story behind zedkit](https://medium.com/p/ce86bfc96636).
 
 Framework-free live data sources for the browser and Node 22+: one small `LiveSource` interface, a `pollingSource`, a `wsSource` that reconnects and can fall back to polling while the socket is down, and `fetchJson` for one-shot JSON GETs with timeout and retry. No React, no DOM beyond the global `WebSocket` and `fetch` (both overridable).
 

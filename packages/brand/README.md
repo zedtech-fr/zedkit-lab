@@ -1,6 +1,9 @@
+> **Not for production use — lab/experimental; copy/paste the code freely.**
+>
+> [Read the story behind zedkit](https://medium.com/p/ce86bfc96636).
+
 # @zedtech/zedkit-brand
 
-> **Lab experiment:** this package is a workbench, not a shelf product — don't use it in production. Steal the code if it's useful; that's the point. [Read the story behind zedkit](https://medium.com/p/ce86bfc96636).
 
 The zedkit Z-wave mark and wordmark as plain SVG files, a small string
 builder, and a React component. Light and dark variants, plus the sources
