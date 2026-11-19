@@ -208,8 +208,10 @@ test("welcome popup form states read finished on the glass", async ({ page }) =>
 
   // A valid submit lands on a finished terminal state. External calls stay
   // blocked so this never touches the network when an endpoint is baked in.
+  // Compare against the Playwright baseURL origin — do not hardcode a host.
+  const baseOrigin = new URL(test.info().project.use.baseURL ?? page.url()).origin;
   await page.route(
-    (url) => url.hostname !== "127.0.0.1" && url.hostname !== "localhost",
+    (url) => url.origin !== baseOrigin,
     async (route) => route.abort(),
   );
   await page.locator('[data-welcome-popup] input[name="email"]').fill("ada@example.com");
