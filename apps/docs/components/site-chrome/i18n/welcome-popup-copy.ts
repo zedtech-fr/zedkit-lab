@@ -1,5 +1,6 @@
 /** English copy for the welcome popup and follow-progress form. Keys only; no markup. */
 export const welcomePopupCopy = {
+  badge: "Lab",
   headline: "Welcome to the lab. Mind the sawdust.",
   notice:
     "Don't ship the @zedtech/zedkit-* npm packages to production. Copy, paste, or steal the useful bits — that's what the code is for.",

@@ -1,4 +1,5 @@
 import { Badge, Heading, Section, Stack, Surface, Text } from "@zedtech/zedkit-ui";
+import { FeaturedHomeReply, FeaturedHomeSurface } from "@/components/site-chrome/featured-home-surface";
 import {
   HOME_CARD_GRID_REVEAL_PROPS,
   HOME_MARKETING_ROOT_PROPS,
@@ -76,42 +77,42 @@ function SixSentencesCardItem({
       </Text>
     </>
   );
+  const body = (
+    <Stack gap="lg" className="h-full justify-between">
+      <Stack gap="sm">
+        <Stack direction="horizontal" gap="sm">
+          <Badge data-home-six-sentences-kit={card.kit}>{homeSixSentencesCopy.kit[card.kit]}</Badge>
+          <Text as="span" variant="muted" typeRole="label">
+            {card.label}
+          </Text>
+        </Stack>
+        <blockquote data-home-six-sentences-quote="">
+          <Heading as="div" typeRole={featured ? "title" : "heading"}>
+            {card.quote}
+          </Heading>
+        </blockquote>
+        <Text variant="muted">{card.quoteAside}</Text>
+      </Stack>
+      {featured ? (
+        <FeaturedHomeReply>
+          <Stack gap="tight">{replyBody}</Stack>
+        </FeaturedHomeReply>
+      ) : (
+        <Stack gap="tight" data-home-six-sentences-reply="">
+          {replyBody}
+        </Stack>
+      )}
+    </Stack>
+  );
   return (
     <li className={featured ? "lg:span-rest" : undefined}>
-      <Surface
-        elevation={0}
-        radius="xl"
-        padding="card"
-        data-home-six-sentences-card={featured ? "featured" : "plain"}
-        {...(featured ? { "data-allow-clip": "" } : {})}
-        className={featured ? "h-full" : "h-full hover-lift"}
-      >
-        <Stack gap="lg" className="h-full justify-between">
-          <Stack gap="sm">
-            <Stack direction="horizontal" gap="sm">
-              <Badge data-home-six-sentences-kit={card.kit}>{homeSixSentencesCopy.kit[card.kit]}</Badge>
-              <Text as="span" variant="muted" typeRole="label">
-                {card.label}
-              </Text>
-            </Stack>
-            <blockquote data-home-six-sentences-quote="">
-              <Heading as="div" typeRole={featured ? "title" : "heading"}>
-                {card.quote}
-              </Heading>
-            </blockquote>
-            <Text variant="muted">{card.quoteAside}</Text>
-          </Stack>
-          {featured ? (
-            <Surface variant="glass" elevation={0} radius="xl" padding="md" data-home-six-sentences-reply="">
-              <Stack gap="tight">{replyBody}</Stack>
-            </Surface>
-          ) : (
-            <Stack gap="tight" data-home-six-sentences-reply="">
-              {replyBody}
-            </Stack>
-          )}
-        </Stack>
-      </Surface>
+      {featured ? (
+        <FeaturedHomeSurface>{body}</FeaturedHomeSurface>
+      ) : (
+        <Surface elevation={0} radius="xl" padding="card" data-home-six-sentences-card="plain" className="h-full hover-lift">
+          {body}
+        </Surface>
+      )}
     </li>
   );
 }
