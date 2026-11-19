@@ -73,7 +73,7 @@ function runRow(overrides = {}) {
     liveUrl: null,
     title: "Add an empty state to the tasks list",
     titleSource: "issue",
-    githubUrl: "https://github.com/zedtech-fr/zedkit/issues/241",
+    githubUrl: "https://github.com/zedtech-fr/zedkit-lab/issues/241",
     active: true,
     stale: false,
     step: "build",

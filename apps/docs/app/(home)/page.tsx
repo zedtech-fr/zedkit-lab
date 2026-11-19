@@ -22,14 +22,14 @@ export default function Home() {
     name: "ZED TECH",
     url: siteUrl,
     logoUrl: pageUrl("/opengraph-image"),
-    sameAs: ["https://github.com/zedtech-fr/zedkit"],
+    sameAs: ["https://github.com/zedtech-fr/zedkit-lab"],
   });
   const softwareJsonLd = buildSoftwareSourceCodeJsonLd({
     name: "zedkit",
     url: siteUrl,
-    codeRepository: "https://github.com/zedtech-fr/zedkit",
+    codeRepository: "https://github.com/zedtech-fr/zedkit-lab",
     programmingLanguage: "TypeScript",
-    license: "https://github.com/zedtech-fr/zedkit/blob/main/LICENSE",
+    license: "https://github.com/zedtech-fr/zedkit-lab/blob/main/LICENSE",
   });
   return (
     <>

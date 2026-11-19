@@ -76,7 +76,7 @@ test("non-http(s), missing number, and n < 1 are not an issue parent", () => {
     liveRunParentHref({
       kind: "review",
       pr: 54,
-      pr_url: "ftp://github.com/zedtech-fr/zedkit/issues/427",
+      pr_url: "ftp://github.com/zedtech-fr/zedkit-lab/issues/427",
     }),
     "/issues/pr/54",
   );
@@ -84,7 +84,7 @@ test("non-http(s), missing number, and n < 1 are not an issue parent", () => {
     liveRunParentHref({
       kind: "review",
       pr: 54,
-      pr_url: "https://github.com/zedtech-fr/zedkit/issues/",
+      pr_url: "https://github.com/zedtech-fr/zedkit-lab/issues/",
     }),
     "/issues/pr/54",
   );

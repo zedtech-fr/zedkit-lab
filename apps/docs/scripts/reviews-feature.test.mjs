@@ -1051,11 +1051,19 @@ test("redirect map: linked PR goes to the issue; unlinked PR uses /issues/pr/:n"
   const redirects = await listReviewRedirectsFrom(port);
   assert.deepEqual(redirects[0], { from: "/reviews", to: "/issues" });
   assert.ok(redirects.some((row) => row.from === "/reviews/pr/133" && row.to === "/issues/108"));
+  assert.ok(redirects.some((row) => row.from === "/issues/pr/133" && row.to === "/issues/108"));
+  assert.equal(redirects.some((row) => row.from === "/issues/pr/54"), false);
   assert.ok(redirects.some((row) => row.from === "/reviews/pr/54" && row.to === "/issues/pr/54"));
   assert.ok(
     redirects.some(
       (row) =>
         row.from === "/reviews/pr/133/runs/run-108-impl" && row.to === "/issues/108/runs/run-108-impl",
+    ),
+  );
+  assert.ok(
+    redirects.some(
+      (row) =>
+        row.from === "/issues/pr/133/runs/run-108-impl" && row.to === "/issues/108/runs/run-108-impl",
     ),
   );
   assert.equal(await port.resolvePr(404), null);
@@ -1440,7 +1448,18 @@ test("inventory-scale redirects cover every PR and run; unknown n is absent; ret
   assert.equal(froms.includes("/reviews/pr/79/runs/run-108-impl"), false);
   const prLevel = redirects.filter((row) => /^\/reviews\/pr\/\d+$/.test(row.from));
   assert.equal(prLevel.length, INVENTORY_LINKED_PRS.length + INVENTORY_UNLINKED_PRS.length + 2);
-  assert.equal(redirects.length, 71);
+  const issuesPrLevel = redirects.filter((row) => /^\/issues\/pr\/\d+$/.test(row.from));
+  assert.equal(issuesPrLevel.length, INVENTORY_LINKED_PRS.length);
+  assert.equal(redirects.find((row) => row.from === "/issues/pr/266")?.to, "/issues/66");
+  assert.equal(
+    redirects.find((row) => row.from === "/issues/pr/308/runs/run-108-impl")?.to,
+    "/issues/108/runs/run-108-impl",
+  );
+  assert.equal(froms.includes("/issues/pr/64"), false);
+  const reviewsRuns = redirects.filter((row) => /^\/reviews\/pr\/\d+\/runs\//.test(row.from)).length;
+  const issuesRuns = redirects.filter((row) => /^\/issues\/pr\/\d+\/runs\//.test(row.from)).length;
+  assert.equal(issuesRuns, reviewsRuns - INVENTORY_UNLINKED_PRS.length);
+  assert.equal(redirects.length, 1 + prLevel.length + reviewsRuns + issuesPrLevel.length + issuesRuns);
 });
 
 test("inventory-scale static params and sitemap stay on /issues paths", async () => {
@@ -2800,7 +2819,7 @@ test("toAgentConsole marks running items from live status and ignores live_url a
       run: { ...liveSample().run, live_url: "https://example.test/live/abc", review_url: null },
       decision: {
         ...liveSample().decision,
-        review_url: "https://github.com/zedtech-fr/zedkit/pull/1",
+        review_url: "https://github.com/zedtech-fr/zedkit-lab/pull/1",
       },
       items: [
         liveItem({ status: "starting" }),
@@ -2813,8 +2832,8 @@ test("toAgentConsole marks running items from live status and ignores live_url a
     mapped.items.map((item) => item.running),
     [true, true, false],
   );
-  assert.equal(mapped.run.postedReviewHref, "https://github.com/zedtech-fr/zedkit/pull/1");
-  assert.equal(mapped.decision?.postedReviewHref, "https://github.com/zedtech-fr/zedkit/pull/1");
+  assert.equal(mapped.run.postedReviewHref, "https://github.com/zedtech-fr/zedkit-lab/pull/1");
+  assert.equal(mapped.decision?.postedReviewHref, "https://github.com/zedtech-fr/zedkit-lab/pull/1");
 });
 
 test("toAgentConsole maps engine labels, stream labels, and the run running flag", () => {

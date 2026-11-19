@@ -5,9 +5,9 @@ import { GITHUB_REPO, githubIssueHref, githubPullHref, issueFullTitle } from "./
 import { issueOpenTarget, resolveIssueOpenId, shouldScrollSelectedIssue } from "./issue-open-target.ts";
 
 test("GitHub hrefs point at the public zedkit repo", () => {
-  assert.equal(GITHUB_REPO, "zedtech-fr/zedkit");
-  assert.equal(githubIssueHref(241), "https://github.com/zedtech-fr/zedkit/issues/241");
-  assert.equal(githubPullHref(250), "https://github.com/zedtech-fr/zedkit/pull/250");
+  assert.equal(GITHUB_REPO, "zedtech-fr/zedkit-lab");
+  assert.equal(githubIssueHref(241), "https://github.com/zedtech-fr/zedkit-lab/issues/241");
+  assert.equal(githubPullHref(250), "https://github.com/zedtech-fr/zedkit-lab/pull/250");
 });
 
 test("issueFullTitle is the visible #N title used on the list, detail, and live region", () => {

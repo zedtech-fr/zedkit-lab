@@ -204,7 +204,7 @@ test("home hero first screen is the mockup lead and glass illustration, not the 
   assert.doesNotMatch(nav, /text: "Reviews"/);
 });
 
-test("home below-hero order is same-idea, six-sentences, paste, identities, limits, manifesto, closing (#210)", () => {
+test("home below-hero order is same-idea, six-sentences, paste, identities, limits, manifesto, closing, follow (#210)", () => {
   const src = readFileSync(join(app, "app/(home)/_home/home-below-hero.tsx"), "utf8");
   const sameIdea = readFileSync(join(homeSections, "home-same-idea-section.tsx"), "utf8");
   const sixSentences = readFileSync(join(homeSections, "home-six-sentences-section.tsx"), "utf8");
@@ -222,7 +222,7 @@ test("home below-hero order is same-idea, six-sentences, paste, identities, limi
   const dockCopy = readFileSync(join(app, "features/identity/dock/i18n/identity-dock-copy.ts"), "utf8");
   const order = [
     ...src.matchAll(
-      /<Home(SameIdea|SixSentences|Paste|Identities|Limits|Manifesto|Closing|ComponentFamilies|Secondary)Section/g,
+      /<Home(SameIdea|SixSentences|Paste|Identities|Limits|Manifesto|Closing|Follow|ComponentFamilies|Secondary)Section/g,
     ),
   ].map((match) => match[1]);
   assert.deepEqual(order, [
@@ -233,6 +233,7 @@ test("home below-hero order is same-idea, six-sentences, paste, identities, limi
     "Limits",
     "Manifesto",
     "Closing",
+    "Follow",
   ]);
   assert.doesNotMatch(src, /HomeYoursScene|HomeComponentFamiliesSection|HomeSecondarySection/);
   assert.doesNotMatch(src, /entryPoints|HomeEntryPoint/);

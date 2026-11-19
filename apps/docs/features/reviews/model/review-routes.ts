@@ -160,11 +160,25 @@ export async function listReviewRedirectsFrom(port: ReviewPort): Promise<ReviewR
       from: `/reviews/pr/${entry.number}`,
       to: redirectPathForPr(entry.issueNumber, entry.number),
     });
+    // Linked PRs have no /issues/pr/:n static page (those params are unlinked
+    // only). Write a stub so /issues/pr/:n reaches the issue instead of 404.
+    if (entry.issueNumber !== null) {
+      redirects.push({
+        from: unlinkedPrPath(entry.number),
+        to: issuePath(entry.issueNumber),
+      });
+    }
     for (const runId of uniqueRunIds(entry.runIds)) {
       redirects.push({
         from: `/reviews/pr/${entry.number}/runs/${runId}`,
         to: redirectPathForPrRun(entry.issueNumber, entry.number, runId),
       });
+      if (entry.issueNumber !== null) {
+        redirects.push({
+          from: unlinkedRunPath(entry.number, runId),
+          to: issueRunPath(entry.issueNumber, runId),
+        });
+      }
     }
   }
   for (const n of RETIRED_REVIEW_PR_NUMBERS) {
