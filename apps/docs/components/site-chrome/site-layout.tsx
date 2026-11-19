@@ -14,7 +14,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
         title: <SiteBrand />,
         url: "/",
       }}
-      githubUrl="https://github.com/zedtech-fr/zedkit"
+      githubUrl="https://github.com/zedtech-fr/zedkit-lab"
       links={siteHeaderLinks()}
       searchToggle={{ enabled: true }}
       themeSwitch={{ enabled: false }}

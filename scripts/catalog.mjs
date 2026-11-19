@@ -416,7 +416,7 @@ function parsePackageMeta(catalogText) {
   };
 }
 
-const REPO_URL = "https://github.com/zedtech-fr/zedkit";
+const REPO_URL = "https://github.com/zedtech-fr/zedkit-lab";
 
 // Expected npm discoverability fields, derived from the catalog header.
 function expectedManifestFields(pkg) {

@@ -231,7 +231,7 @@ test("runs list URL assembles the live-service path from the base", () => {
 });
 
 test("runs envelope accepts the v1 fixture and drops a disallowed live URL", () => {
-  const parsed = parseRunsEnvelope(runsEnvelope([runRow({ liveUrl: "https://github.com/zedtech-fr/zedkit/pull/250" })]));
+  const parsed = parseRunsEnvelope(runsEnvelope([runRow({ liveUrl: "https://github.com/zedtech-fr/zedkit-lab/pull/250" })]));
   assert.equal(parsed.ok, true);
   assert.equal(parsed.value.runs[0].liveUrl, null);
   assert.equal(parsed.value.runs[0].endedAt, "2026-11-12T15:05:12Z");

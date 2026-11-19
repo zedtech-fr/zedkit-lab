@@ -1,7 +1,7 @@
 # `main` branch protection
 
 `main` is protected by the repository ruleset
-[**main: required CI checks**](https://github.com/zedtech-fr/zedkit/rules/26725586)
+[**main: required CI checks**](https://github.com/zedtech-fr/zedkit-lab/rules/26725586)
 (target: default branch). Direct pushes are blocked; land changes with a
 pull request and green required checks.
 
@@ -75,10 +75,10 @@ Disable or edit the ruleset in
 
 ```sh
 # Inspect current ruleset (JSON)
-gh api repos/zedtech-fr/zedkit/rulesets/26725586
+gh api repos/zedtech-fr/zedkit-lab/rulesets/26725586
 
 # Disable enforcement (emergency only)
-gh api --method PUT repos/zedtech-fr/zedkit/rulesets/26725586 \
+gh api --method PUT repos/zedtech-fr/zedkit-lab/rulesets/26725586 \
   --input - <<'EOF'
 {
   "name": "main: required CI checks",

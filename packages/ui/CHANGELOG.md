@@ -83,7 +83,7 @@
   UI install: `peerDependencies` declare tested floors (`react`/`react-dom` `^19.0.0`, `tailwindcss` `^4.0.0`, `payload` `^3.93.0` for payload-seo, `react` `^19.0.0` for i18n) so `npm install` no longer ERESOLVEs on current scaffolds, with the smoke cells as the compatibility proof; `DataTable` takes an explicit `scrollAriaLabel`. The Next src-dir smoke now asserts painted styles and runs pnpm, npm and plain-layout cells, builds the UI closure before packing (clean checkouts ship no `dist/`), installs Chromium on the Ubuntu path, and leaves snippets that already name both `@source` depths untouched.
 
 - 58b6f9d: Nest Button under `src/button/`. Public exports and the copy-install target `components/ui/button.tsx` are unchanged.
-- 58b6f9d: Stage shadcn copy sources from the package instead of committing `registry/ui`. Copy bricks with `npx shadcn@latest init -y --base radix --preset nova` then the hosted JSON or `@zedkit`. The GitHub shorthand `npx shadcn add zedtech-fr/zedkit/<brick>` is retired. `@source` must be relative to the CSS file (`../node_modules` from `app/` or Vite `src/`, `../../node_modules` from `src/app/`).
+- 58b6f9d: Stage shadcn copy sources from the package instead of committing `registry/ui`. Copy bricks with `npx shadcn@latest init -y --base radix --preset nova` then the hosted JSON or `@zedkit`. The GitHub shorthand `npx shadcn add zedtech-fr/zedkit-lab/<brick>` is retired. `@source` must be relative to the CSS file (`../node_modules` from `app/` or Vite `src/`, `../../node_modules` from `src/app/`).
 - 58b6f9d: Group UI sources into family folders. Public export names, CSS entries, and copy-install targets stay the same. The quality preset's `forwardRef` hint now points at `src/button/button.tsx`.
 - Updated dependencies [58b6f9d]
   - @zedtech/zedkit-i18n@0.2.3
@@ -534,7 +534,7 @@
 - 0d3dddb: Drop unused `next-themes` (docs owns the theme provider) and unused `axe-core` (comes in through vitest-axe).
 - ae82829: Darken the light success fill (stock theme and scoped mist) so the success Badge text reaches 4.5:1 (it was 3.15:1).
 - 13bae80: Registry copy: card-skeleton family uses kit skeleton URL. Refs #420.
-- 466f853: Docs: registry update story and GitHub `zedtech-fr/zedkit/<brick>` shorthand; commit `registry/ui` sources (#420).
+- 466f853: Docs: registry update story and GitHub `zedtech-fr/zedkit-lab/<brick>` shorthand; commit `registry/ui` sources (#420).
 - 2392ac5: Status registry copy family: kit sibling URLs and theme css for status-dot/checkmark/status-label. Refs #420.
 - 7bd16b7: Registry copy path: theme item plus kit button/dialog URLs for composed bricks (#420).
 - 085da29: Promote RouteModal to beta (tested, documented, reviewed, a11y-covered)

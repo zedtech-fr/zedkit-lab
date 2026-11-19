@@ -1,4 +1,4 @@
-export const GITHUB_REPO = "zedtech-fr/zedkit";
+export const GITHUB_REPO = "zedtech-fr/zedkit-lab";
 
 export function githubIssueHref(n: number): string {
   return `https://github.com/${GITHUB_REPO}/issues/${n}`;

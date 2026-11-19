@@ -77,7 +77,7 @@ test.describe("site header navigation (#1034)", () => {
     await expect(header.getByRole("link", { name: "Issues", exact: true })).toHaveAttribute("href", "/issues");
     await expect(header.getByRole("link", { name: "GitHub (opens in a new tab)", exact: true })).toHaveAttribute(
       "href",
-      "https://github.com/zedtech-fr/zedkit",
+      "https://github.com/zedtech-fr/zedkit-lab",
     );
     await expect(header.getByRole("link", { name: siteChromeCopy.getStarted, exact: true })).toHaveAttribute(
       "href",
