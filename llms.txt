@@ -1,6 +1,6 @@
 # zedkit
 
-Lab, not production: the `@zedtech/zedkit-*` npm packages are workbench experiments — don't use them in production; copying or stealing useful code is encouraged. [Story](https://medium.com/@romain-zt/zedkit-jai-donn%C3%A9-les-cl%C3%A9s-%C3%A0-grokbot-et-gard%C3%A9-mon-t%C3%A9l%C3%A9phone-ce86bfc96636). Repo: https://github.com/zedtech-fr/zedkit-lab.
+Lab, not production: the `@zedtech/zedkit-*` npm packages are workbench experiments — don't use them in production; copying or stealing useful code is encouraged. [Story](https://medium.com/p/ce86bfc96636). Repo: https://github.com/zedtech-fr/zedkit-lab.
 
 Open-source building blocks for modern apps.
 

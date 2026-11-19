@@ -156,7 +156,7 @@ test("story and github URLs point at the article and zedkit-lab", () => {
     /export const SITE_GITHUB_URL = "https:\/\/github.com\/zedtech-fr\/zedkit-lab"/,
   );
   assert.match(links, /export const SITE_STORY_URL =/);
-  assert.match(links, /medium.com\/@romain-zt\/zedkit-jai-donn/);
+  assert.match(links, /medium.com\/p\/ce86bfc96636/);
   assert.match(links, /NEWSLETTER_ENDPOINT_ENV = "NEXT_PUBLIC_NEWSLETTER_ENDPOINT"/);
   const hrefs = read("features/reviews/model/github-hrefs.ts");
   assert.match(hrefs, /export const GITHUB_REPO = "zedtech-fr\/zedkit-lab"/);
