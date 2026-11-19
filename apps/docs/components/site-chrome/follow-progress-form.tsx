@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, type ReactNode } from "react";
-import { Button, Input, Label, Stack, Text } from "@zedtech/zedkit-ui";
+import { Button, Input, Label, Stack, StatusDot, Text } from "@zedtech/zedkit-ui";
 
 import { OffPathLink } from "@/components/site-chrome/off-path-link";
 import { welcomePopupCopy } from "@/components/site-chrome/i18n/welcome-popup-copy";
@@ -181,9 +181,12 @@ function FollowProgressOutcome({
   return (
     <Stack gap="tight">
       {status === "success" ? (
-        <Text role="status" className="text-dense">
-          {success}
-        </Text>
+        <Stack direction="horizontal" gap="sm" className="items-start" data-follow-progress="success">
+          <StatusDot tone="active" pulse={false} />
+          <Text role="status" typeRole="label">
+            {success}
+          </Text>
+        </Stack>
       ) : null}
       {error !== null ? (
         <Stack direction="horizontal" gap="sm" className="flex-wrap items-center">

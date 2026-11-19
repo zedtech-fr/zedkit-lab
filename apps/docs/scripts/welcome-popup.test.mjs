@@ -89,6 +89,8 @@ test("root layout mounts the welcome popup once, ahead of Provider, so every rou
   assert.match(popup, /aria-haspopup="dialog"/);
   assert.match(form, /NEXT_PUBLIC_NEWSLETTER_ENDPOINT|NEWSLETTER_ENDPOINT_ENV/);
   assert.match(form, /data-follow-progress="form"/);
+  assert.match(form, /data-follow-progress="success"/);
+  assert.match(form, /form.copy.success/);
   assert.match(form, /data-follow-progress="unwired"/);
   assert.doesNotMatch(form, /data-follow-progress="fallback"/);
   assert.doesNotMatch(form, /endpoint === null\) return/);
