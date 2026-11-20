@@ -76,7 +76,7 @@
     "@playwright/test": "catalog:",
     "@types/node": "catalog:",
     "@zedtech/zedkit-quality": "workspace:*",
-    "prettier": "3.9.10",
+    "prettier": "3.10.1",
     "typescript": "catalog:",
     "vitest": "catalog:"
   },
